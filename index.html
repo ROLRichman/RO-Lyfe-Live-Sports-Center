@@ -10,6 +10,67 @@
 :root{color-scheme:dark;--bg:#07111f;--panel:#0d1b2c;--panel2:#10243a;--line:#1e3850;--text:#eef7ff;--muted:#9db2c7;--cyan:#4de1e6;--green:#7cf5b2;--gold:#ffad66;--orange:#ff8b3d;--red:#ff7b86}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 88% 4%,rgba(255,139,61,.10) 0,transparent 25%),radial-gradient(ellipse at top right,#10334a 0,transparent 40%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(1180px,100% - 28px);margin:auto}.topbar{position:sticky;top:0;z-index:5;background:#07111feF;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;letter-spacing:.03em}.brand small{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.17em}.navlinks{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem}.hero{padding:54px 0 28px}.eyebrow{color:var(--green);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.hero h1{font-size:clamp(2.1rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.045em;margin:12px 0}.hero h1 span{color:var(--cyan);text-shadow:0 0 18px rgba(255,139,61,.14)}.hero p{max-width:680px;color:var(--muted);font-size:1.05rem}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn,button,select,input{font:inherit}.btn,button{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:var(--text);font-weight:700}.btn.primary,button.primary{background:linear-gradient(135deg,#ffb06b,#ff8b3d);color:#201006;border-color:#ff9a50;box-shadow:0 0 16px rgba(255,139,61,.12)}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}.statusgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 34px}.stat,.panel,.sportcard{background:linear-gradient(145deg,#10243a,#0a1727);border:1px solid var(--line);border-radius:18px;padding:18px}.stat b{display:block;font-size:1.05rem}.stat span{font-size:.83rem;color:var(--muted)}section{padding:22px 0 34px}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}.sectionhead h2{margin:0;font-size:clamp(1.4rem,3vw,2rem)}.sectionhead p{margin:4px 0 0;color:var(--muted)}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar button.active{border-color:var(--orange);color:#ffc18e;box-shadow:inset 0 0 0 1px rgba(255,139,61,.35),0 0 14px rgba(255,139,61,.10)}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.controls select,.controls input{background:#071522;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;min-width:140px}.scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.game{background:linear-gradient(145deg,rgba(255,139,61,.035),var(--panel) 42%);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}.gamehead{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.78rem;margin-bottom:12px}.live{color:var(--green);font-weight:800}.teams{display:grid;gap:10px}.team{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:750}.score{font-size:1.35rem;font-variant-numeric:tabular-nums}.gamefoot{border-top:1px solid var(--line);margin-top:12px;padding-top:10px;color:var(--muted);font-size:.8rem}.empty{grid-column:1/-1;text-align:center;padding:30px 18px;color:var(--muted);border:1px dashed var(--line);border-radius:16px}.sportsgrid,.resourcegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.sportcard{display:flex;flex-direction:column;gap:8px}.sporticon{font-size:1.7rem}.sportcard h3{margin:0}.sportcard p{margin:0;color:var(--muted);font-size:.9rem}.sportcard a{margin-top:auto;font-weight:750}.resourcegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.resource{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);padding:16px;border-radius:14px}.resource .sporticon{font-size:1.4rem}.resource p{margin:3px 0 0;color:var(--muted);font-size:.88rem}.notice{border-left:3px solid var(--gold);padding:12px 14px;background:#2a2418;color:#f9e8c7;border-radius:0 10px 10px 0;font-size:.88rem}.footer{border-top:1px solid var(--line);margin-top:28px;padding:28px 0 44px;color:var(--muted);font-size:.85rem}.small{font-size:.82rem;color:var(--muted)}#message{color:var(--muted);font-size:.88rem;min-height:1.5em}
 @media(max-width:700px){.nav{align-items:flex-start;padding:12px 0;flex-direction:column}.navlinks{gap:12px}.hero{padding-top:36px}.statusgrid{grid-template-columns:1fr}.scores,.sportsgrid,.resourcegrid{grid-template-columns:1fr}.stat{padding:14px}.wrap{width:min(100% - 20px,1180px)}}
+
+/* RO'Lyfe Tactical Market Lab — reuse the existing RTIC engine */
+.market-lab-wrap{border:1px solid rgba(255,139,61,.35);border-radius:18px;background:linear-gradient(135deg,rgba(255,139,61,.07),rgba(88,166,255,.045),rgba(167,139,250,.04)),var(--panel);padding:16px}
+.market-lab-wrap>summary{font-size:1.05rem}.market-statusband{display:grid;grid-template-columns:1fr 1.2fr;gap:10px;margin:14px 0;padding:12px;background:#071522;border:1px solid var(--line);border-radius:12px}
+.market-statusband p{margin:4px 0;color:var(--muted);font-size:.84rem}.market-statusband b{color:#ffc18e}
+.market-state-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid #466076;border-radius:999px;padding:5px 9px;font-weight:850;font-size:.74rem;letter-spacing:.04em;color:#d4e5f4;background:#10243a}
+.market-state-badge.good{border-color:rgba(124,245,178,.55);color:#9affc8;background:rgba(30,90,64,.25)}
+.market-state-badge.warn{border-color:rgba(255,173,102,.55);color:#ffc18e;background:rgba(130,70,20,.2)}
+.market-controls{display:grid;grid-template-columns:1.25fr 1fr .85fr .9fr .85fr;gap:9px;margin:12px 0}
+.market-controls label,.market-osc-controls label{display:grid;gap:5px;min-width:0;color:var(--muted);font-size:.79rem;font-weight:650}
+.market-controls select,.market-controls input,.market-osc-controls input{min-width:0;width:100%;padding:10px;background:#06111d;color:var(--text);border:1px solid #29445d;border-radius:10px}
+.market-lab-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.market-scan-status{border-left:3px solid var(--orange);background:rgba(255,139,61,.07);padding:10px 12px;border-radius:0 10px 10px 0;min-height:42px;color:#d4e5f4;font-size:.86rem;margin:12px 0}
+.market-table-wrap{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:#071522;margin:12px 0}
+.market-results-table{border-collapse:collapse;width:100%;min-width:760px;font-size:.82rem}
+.market-results-table th,.market-results-table td{padding:10px 11px;text-align:left;border-bottom:1px solid #1e3850;white-space:nowrap}
+.market-results-table th{background:#10243a;color:#b8cada;font-size:.73rem;letter-spacing:.04em;text-transform:uppercase}
+.market-results-table tr:last-child td{border-bottom:0}.market-results-table .num{font-variant-numeric:tabular-nums}
+.market-symbol-link{border:0;background:transparent;color:#8feaf0;padding:2px 0;text-decoration:underline;text-underline-offset:3px}
+.market-scan-tag{font-size:.7rem;font-weight:850;border-radius:6px;padding:4px 6px;background:#13283a;border:1px solid #34506a;color:#bcd5e7}
+.market-scan-tag.qualified{color:#9affc8;border-color:#2f7859;background:rgba(30,90,64,.2)}
+.market-scan-tag.filtered{color:#ffc18e;border-color:#86572f;background:rgba(130,70,20,.17)}
+.market-chart-card{background:#050e18;border:1px solid #29445d;border-radius:14px;overflow:hidden;margin:12px 0}
+.market-chart-heading{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;background:#0b1928;border-bottom:1px solid #29445d}
+.market-chart-heading h3{margin:0;font-size:1rem}.market-chart-heading p{margin:3px 0 0;color:var(--muted);font-size:.78rem}
+.market-chart-title{color:#ffc18e;font-weight:900}.market-tradingview-chart{height:480px;min-height:380px;width:100%;background:#050e18}
+.market-chart-fallback{padding:24px;color:var(--muted);font-size:.86rem}
+.rtic-data-status{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#071522;color:#b9ccdc;font-size:.83rem;margin:9px 0}
+.rtic-data-status.good{border-color:#28694d;color:#a5f6c6}.rtic-data-status.warn{border-color:#85582f;color:#ffd1a6}.rtic-data-status.bad{border-color:#8a3f47;color:#ffb9be}
+.rtic-data-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.rtic-data-metric{min-width:0;background:#091827;border:1px solid #203b52;border-radius:10px;padding:11px}
+.rtic-data-metric>span{display:block;color:#9db2c7;font-size:.7rem;letter-spacing:.045em}.rtic-data-metric>strong{display:block;font-size:1.02rem;margin-top:5px;overflow-wrap:anywhere;color:#f2f8ff}.rtic-data-metric>.small-muted{font-size:.72rem;color:#9db2c7}
+.rtic-provider-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0}
+.rtic-provider{padding:9px;background:#091827;border:1px solid #203b52;border-radius:8px;font-size:.73rem;color:#9db2c7}
+.rtic-provider strong{display:block;margin-top:4px;color:#f2f8ff;font-size:.78rem}
+.rtic-scan-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.rtic-scan-dropdown{border:1px solid #203b52;border-radius:11px;margin:0;overflow:hidden;background:#091827;min-width:0}
+.rtic-scan-dropdown>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:9px;padding:11px}
+.rtic-scan-dropdown>summary::-webkit-details-marker{display:none}
+.rtic-scan-dropdown>summary:after{content:"＋";font-size:1.05rem;color:#ffad66}.rtic-scan-dropdown[open]>summary:after{content:"−"}
+.rtic-scan-row{display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0}
+.rtic-scan-row strong{display:block;font-size:.83rem;overflow-wrap:anywhere}.rtic-scan-row .small-muted{font-size:.76rem;color:#9db2c7}
+.rtic-expand-hint{display:block;color:#9db2c7;font-size:.68rem;margin-top:4px}
+.rtic-vote{display:inline-flex;border-radius:6px;padding:5px 7px;font-size:.68rem;font-weight:900;line-height:1.3;white-space:nowrap;border:1px solid #34506a;background:#13283a;color:#bcd5e7}
+.rtic-vote.bullish{color:#9affc8;border-color:#2f7859;background:rgba(30,90,64,.2)}.rtic-vote.bearish{color:#ffb9be;border-color:#8a3f47;background:rgba(138,63,71,.17)}.rtic-vote.neutral{color:#d4e5f4}
+.rtic-scan-explain{padding:12px;background:#071522;border-top:1px solid #203b52;font-size:.82rem;line-height:1.5;overflow-wrap:anywhere}
+.rtic-scan-explain p{margin:6px 0}.rtic-scan-current{border-left:3px solid #4de1e6;background:rgba(77,225,230,.06);border-radius:0 8px 8px 0;padding:9px;margin-bottom:10px}
+.rtic-scan-current strong{color:#b4faff}.rtic-mini-visual{margin:9px 0;padding:6px;background:#050e18;border-radius:8px;overflow:hidden}.rtic-mini-visual svg{width:100%;height:auto;display:block}
+.rtic-scan-score{border-color:#40627d;background:linear-gradient(145deg,rgba(88,166,255,.09),rgba(4,12,20,.97))}
+.rtic-atr-card{margin-top:10px;border:1px solid #29445d;border-radius:10px;padding:10px;background:#091827}.rtic-atr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.rtic-atr-grid>div{background:#071522;border:1px solid #203b52;border-radius:8px;padding:8px}.rtic-atr-grid span,.rtic-atr-grid small{display:block;color:#9db2c7;font-size:.72rem}.rtic-atr-grid strong{display:block;margin:5px 0;font-size:.95rem;overflow-wrap:anywhere}
+.rtic-atr-price-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.rtic-atr-price-row span{color:#9db2c7;font-size:.75rem}
+.rtic-atr-guide-btn,.rtic-scan-dropdown button{margin:6px 0}
+.market-oscillator-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.market-oscillator{border:1px solid #203b52;background:#091827;border-radius:12px;padding:12px;min-width:0}
+.market-oscillator h3{margin:0;font-size:.95rem}.market-oscillator p{font-size:.8rem;color:#9db2c7}.market-oscillator svg{width:100%;height:auto;display:block}
+.market-osc-controls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
+.market-lab-note{color:var(--muted);font-size:.8rem;line-height:1.5;margin:10px 0}
+.engine-hidden{display:none!important}
+@media(max-width:850px){.market-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.market-statusband{grid-template-columns:1fr}.rtic-provider-list{grid-template-columns:repeat(2,minmax(0,1fr))}.market-osc-controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.market-lab-wrap{padding:10px}.market-tradingview-chart{height:410px;min-height:360px}.rtic-data-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.rtic-scan-list,.market-oscillator-grid{grid-template-columns:1fr}.market-results-table{min-width:720px}.market-controls{grid-template-columns:1fr 1fr}.market-provider-list{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -36,6 +97,63 @@
 <article class="sportcard"><div class="sporticon">🏉</div><h3>Australian Football</h3><p>AFL matchday news, fixtures and results.</p><a href="https://www.afl.com.au/" target="_blank" rel="noopener">AFL official site ↗</a></article>
 <article class="sportcard"><div class="sporticon">🏆</div><h3>More Leagues</h3><p>More sports and competitions can be added after verifying data access.</p><a href="https://www.espn.com/" target="_blank" rel="noopener">Explore sports news ↗</a></article>
 </div></section>
+
+<section id="market-lab">
+ <div class="sectionhead"><div><div class="eyebrow">RO’Lyfe Tactical Intelligence · Optional Market Room</div><h2>Sector Scanner & Chart Lab</h2><p>Sports stay up front. Open the market desk when you want to scan a sector, select a stock, and study the chart and your full RTIC indicator stack without leaving this page.</p></div><span class="market-state-badge">SEPARATE MARKET WORKSPACE</span></div>
+ <details class="dropdown-panel market-lab-wrap" id="market-lab-panel">
+  <summary>Open RO’Lyfe Tactical Market Lab · Sector Scanner + Chart + 14 Indicators</summary>
+  <div class="details-body">
+   <div class="market-statusband">
+    <div><span id="market-provider-badge" class="market-state-badge warn">NOT SCANNED</span><p id="market-provider-state">No stock scan has run in this session. No demo prices are substituted for missing data.</p></div>
+    <div><b>Connected scanner architecture</b><p>Uses the existing RO’Lyfe RTIC market-data function and Tickerbot historical OHLCV bars. Quote timing, interval coverage, and entitlement depend on the provider account. TradingView chart availability and delays may differ from the scanner bars.</p></div>
+   </div>
+   <div class="market-controls">
+    <label>Market sector<select id="market-sector">
+     <option value="staples" selected>Consumer Staples</option><option value="retail">Retail & Consumer Discretionary</option><option value="electronics">Technology & Electronics</option><option value="semiconductors">Semiconductors & AI</option><option value="communications">Communication Services</option><option value="financials">Financial Services & Banking</option><option value="healthcare">Healthcare & Pharmaceuticals</option><option value="energy">Energy & Oil</option><option value="industrials">Industrials & Defense</option><option value="automotive">Automotive & EV</option><option value="realestate">Real Estate & REITs</option><option value="utilities">Utilities</option><option value="materials">Materials & Mining</option><option value="transportation">Transportation & Logistics</option><option value="travel">Travel, Hotels & Restaurants</option><option value="etfs">ETFs & Broad Market</option><option value="cryptoequities">Crypto-Linked Equities</option>
+    </select></label>
+    <label>Symbol / ETF<select id="market-symbol-select" aria-label="Choose a sector ticker"></select></label>
+    <label>Timeframe<select id="market-timeframe"><option value="5m" selected>5m</option><option value="15m">15m</option><option value="1h">1H</option><option value="4h">4H</option><option value="1d">1D</option><option value="6m">6M · daily history</option><option value="1yr">1yr · daily history</option></select></label>
+    <label>Scanner mode<select id="market-scan-mode"><option value="standard" selected>Standard</option><option value="sniper">Sniper</option></select></label>
+    <label>Universe size<select id="market-batch-size"><option value="10" selected>First 10</option><option value="20">First 20</option><option value="all">Entire sector list</option></select></label>
+   </div>
+   <p class="market-lab-note">Standard uses the RTIC score, available indicator count and liquidity proxy to surface candidates. Sniper tightens the requirements with a stronger directional edge and relative-volume check. These are screening rules—not probabilities of success, buy/sell instructions, or options-chain liquidity checks.</p>
+   <div class="market-lab-actions"><button type="button" id="market-run-sector" class="primary">⚡ Scan sector universe</button><button type="button" id="market-run-symbol">Analyze selected symbol</button><button type="button" id="market-open-chart">Open / refresh chart</button></div>
+   <div class="market-scan-status" id="market-scan-status" role="status" aria-live="polite">Ready. Select Consumer Staples, choose a timeframe, then run the provider-backed sector scan. The initial batch is limited to 10 tickers.</div>
+   <div class="market-table-wrap"><table class="market-results-table"><thead><tr><th>Symbol</th><th>Last bar close</th><th>RTIC score</th><th>Liquidity</th><th>RVOL</th><th>Directional context</th><th>Mode filter</th><th>Result</th></tr></thead><tbody id="market-results-body"><tr><td colspan="8" class="small">No results yet. Prices and scores appear only after the provider returns usable bars.</td></tr></tbody></table></div>
+   <div class="market-chart-card">
+    <div class="market-chart-heading"><div><h3>Price Chart · <span id="market-chart-symbol-label" class="market-chart-title">WMT</span></h3><p id="market-chart-description">TradingView embedded chart · provider/exchange delays may apply.</p></div><span id="market-chart-timeframe" class="market-state-badge">5m</span></div>
+    <div id="market-tradingview-chart" class="market-tradingview-chart"><div class="market-chart-fallback">Open the Market Lab or select a symbol to load the chart.</div></div>
+   </div>
+   <details class="dropdown-panel" id="market-indicator-details">
+    <summary>Full RTIC Indicator Lab · 14 visual panels + MACD / Stochastic graphs</summary>
+    <div class="details-body">
+     <div id="rticDataStatus" class="rtic-data-status">No provider scan loaded yet.</div>
+     <div id="rticQuoteOutput" class="rtic-data-metrics"></div>
+     <div id="rticScanOutput"><div class="empty">Pick a result row or tap “Analyze selected symbol” to pull provider bars and calculate all 14 RTIC indicator panels.</div></div>
+     <div class="market-oscillator-grid">
+      <article class="market-oscillator"><h3>MACD · Visual panel</h3><p id="rticMacdReadout">Waiting for returned historical bars.</p><div id="rticMacdPlot" aria-label="RTIC MACD chart"></div><span id="rticMacdBias" class="market-state-badge">WAITING</span></article>
+      <article class="market-oscillator"><h3>Stochastic · Visual panel</h3><p id="rticStochReadout">Waiting for returned historical bars.</p><div id="rticStochPlot" aria-label="RTIC Stochastic chart"></div><span id="rticStochBias" class="market-state-badge">WAITING</span></article>
+     </div>
+     <p id="rticOscSource" class="market-lab-note">Oscillator plots use the returned Tickerbot bars when available. No sample indicator values are inserted.</p>
+     <details class="dropdown-panel"><summary>Advanced MACD / Stochastic settings</summary><div class="details-body">
+      <div class="market-osc-controls">
+       <label>MACD fast EMA<input id="rticMacdFast" type="number" min="2" max="50" value="12"></label><label>MACD slow EMA<input id="rticMacdSlow" type="number" min="3" max="100" value="26"></label><label>MACD signal<input id="rticMacdSignal" type="number" min="2" max="50" value="9"></label><label>Stochastic %K lookback<input id="rticStochPeriod" type="number" min="2" max="50" value="14"></label><label>Stochastic %D smoothing<input id="rticStochSmooth" type="number" min="1" max="20" value="3"></label>
+      </div><button type="button" id="market-save-oscillators">Update oscillator plots</button><p class="market-lab-note">Settings are applied by the existing RTIC engine and saved in this browser when local storage is available.</p>
+     </div></details>
+    </div>
+   </details>
+   <details class="dropdown-panel"><summary>Provider configuration status</summary><div class="details-body"><div id="rticProviderStatus" class="rtic-provider-list"><div class="rtic-provider">Tickerbot<strong>Checking server configuration…</strong></div></div><p class="market-lab-note">This status indicates whether a server-side secret is configured; it does not certify exchange-real-time data or guarantee a successful quote. Each scan shows its own result and timestamp.</p></div></details>
+   <div class="engine-hidden" aria-hidden="true">
+    <select id="rticDataProvider"><option value="tickerbot" selected>Tickerbot</option><option value="finnhub">Finnhub</option><option value="alphavantage">Alpha Vantage</option><option value="coingecko">CoinGecko</option></select>
+    <select id="rticWatchlistPick"></select><input id="rticDataSymbol" value="WMT"><select id="rticDataInterval"><option value="5m">5m</option><option value="15m">15m</option><option value="1h">1h</option><option value="4h">4h</option><option value="1d">1d</option><option value="1w">1w</option><option value="1mo">1mo</option></select>
+    <select id="rticDataLimit"><option value="150">150</option><option value="200">200</option><option value="300" selected>300</option><option value="500">500</option></select>
+    <button type="button" id="rticFetchButton">Pull secure market data</button>
+    <input id="tacticalHmaPeriod" value="31"><input id="tacticalPbLength" value="50"><input id="tacticalPbMultiplier" value="1.5"><input id="tacticalPbBuyEma" value="1"><input id="tacticalPbSellEma" value="13"><input id="tacticalPbVolUp" value="100"><input id="tacticalPbVolDown" value="100"><input id="tacticalPbSpread" value="0.09"><input id="tacticalPbShowLabel" type="checkbox" checked><select id="tacticalPbMoveTo"><option value="UP">UP</option><option value="DOWN">DOWN</option></select>
+   </div>
+  </div>
+ </details>
+</section>
+
 <section id="news"><div class="sectionhead"><div><div class="eyebrow">Stories beyond the scoreboard</div><h2>Sports News & Talk</h2><p>Newsrooms, analysis, podcasts and sports-cast destinations.</p></div></div><div class="resourcegrid">
 <div class="resource"><div class="sporticon">📰</div><div><b><a href="https://www.espn.com/" target="_blank" rel="noopener">ESPN</a></b><p>Scores, headlines, analysis and video coverage.</p></div></div>
 <div class="resource"><div class="sporticon">🎙️</div><div><b><a href="https://www.espn.com/radio/" target="_blank" rel="noopener">ESPN Radio</a></b><p>Sports talk and audio programming.</p></div></div>
