@@ -390,6 +390,7 @@ el("market-open-chart").addEventListener("click",function(){loadChart(symbolEl.v
 rowsEl.addEventListener("click",function(e){const b=e.target.closest("[data-market-analyze]");if(!b)return;const s=b.getAttribute("data-market-analyze"),r=cache.get(s);symbolEl.value=s;if(r)showDetail(r);else runOne();});
 el("market-save-oscillators").addEventListener("click",function(){if(window.ROLYFEData&&window.ROLYFEData.setOscillatorSettings){window.ROLYFEData.setOscillatorSettings();statusEl.textContent="MACD / Stochastic settings updated through the existing RTIC engine."; }});
 el("market-lab-panel").addEventListener("toggle",function(){if(this.open&&!chartMounted)loadChart(symbolEl.value||"WMT");});
+window.ROLYFEForceMarketChartRefresh=function(){lastChartKey='';chartMounted=false;loadChart(symbolEl.value||'WMT');};
 populateSymbols();setEngineControls(symbolEl.value);
 })();
 </script>
@@ -407,8 +408,8 @@ populateSymbols();setEngineControls(symbolEl.value);
  const slider=byId('market-chart-height'),value=byId('market-chart-height-value'),chart=byId('market-tradingview-chart'),refresh=byId('market-chart-refresh');
  function applyHeight(){const h=Number(slider.value)||480;chart.style.height=h+'px';value.textContent=h+' px';}
  slider.addEventListener('input',applyHeight);applyHeight();
- refresh.addEventListener('click',()=>{refresh.disabled=true;refresh.textContent='↻ Refreshing…';const iframe=chart.querySelector('iframe');if(iframe){const src=iframe.getAttribute('src');if(src){iframe.setAttribute('src',src);}}else{const opener=byId('market-open-chart');if(opener)opener.click();}
- setTimeout(()=>{refresh.disabled=false;refresh.textContent='↻ Refresh chart';},900);});
+ refresh.addEventListener('click',()=>{refresh.disabled=true;refresh.textContent='↻ Refreshing…';if(typeof window.ROLYFEForceMarketChartRefresh==='function'){window.ROLYFEForceMarketChartRefresh();}else{const iframe=chart.querySelector('iframe');if(iframe&&iframe.getAttribute('src'))iframe.setAttribute('src',iframe.getAttribute('src'));else window.location.reload();}
+ setTimeout(()=>{refresh.disabled=false;refresh.textContent='↻ Refresh chart';},1200);});
 })();
 </script>
 
