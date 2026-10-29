@@ -188,5 +188,163 @@ document.querySelectorAll('[data-jump-feed]').forEach(a=>a.addEventListener('cli
 document.getElementById('refresh').addEventListener('click',load);mode.addEventListener('change',()=>{date.style.display=mode.value==='schedule'?'block':'none';});date.style.display='none';
 })();
 </script>
+
+<script src="https://rolrichman.github.io/RO-Lyfe-Tactical-Intelligence-Center-/js/rtic-data-engine.js"></script>
+<script>
+(function(){
+"use strict";
+const sectors={
+ staples:{label:"Consumer Staples",symbols:["WMT","COST","PG","KO","PEP","PM","MO","MDLZ","CL","KMB","KVUE","GIS","KHC","K","HSY","SYY","KR","EL","ADM","TSN","CAG","TAP","STZ","BF.B","CHD","CLX","BG","CPB","HRL","MKC","LW","POST","USFD","CASY","KDP","MNST","CELH","COKE","ACI","XLP"]},
+ retail:{label:"Retail & Consumer Discretionary",symbols:["AMZN","TGT","HD","LOW","NKE","TJX","ROST","DG","DLTR","BKNG","MAR","MCD","SBUX","YUM","ABNB","UBER","CHWY","W"]},
+ electronics:{label:"Technology & Electronics",symbols:["AAPL","MSFT","NVDA","AMZN","GOOGL","META","ORCL","IBM","CSCO","ADBE","CRM","NFLX","QCOM","INTC","MU","APH","ANET","DELL"]},
+ semiconductors:{label:"Semiconductors & AI",symbols:["NVDA","AMD","AVGO","QCOM","INTC","MU","TSM","ARM","LRCX","AMAT","ASML","MRVL","SMCI","TER","AMKR","ON","ADI"]},
+ communications:{label:"Communication Services",symbols:["GOOGL","META","NFLX","DIS","CMCSA","T","VZ","TMUS","WBD","FOXA"]},
+ financials:{label:"Financial Services & Banking",symbols:["JPM","BAC","WFC","C","GS","MS","BLK","SCHW","V","MA","PYPL","COIN","HOOD","AXP","USB","PNC"]},
+ healthcare:{label:"Healthcare & Pharmaceuticals",symbols:["LLY","UNH","JNJ","MRK","ABBV","PFE","NVO","ISRG","ABT","TMO","AMGN","GILD","CVS","CI","BMY","REGN"]},
+ energy:{label:"Energy & Oil",symbols:["XOM","CVX","COP","OXY","SLB","FANG","PSX","MPC","EOG","XLE"]},
+ industrials:{label:"Industrials & Defense",symbols:["CAT","BA","GE","RTX","LMT","HON","DE","ETN","UPS","FDX","UNP","WM","PWR","GD","NOC"]},
+ automotive:{label:"Automotive & EV",symbols:["TSLA","F","GM","RIVN","LCID","TM","HMC","AN"]},
+ realestate:{label:"Real Estate & REITs",symbols:["PLD","O","AMT","EQIX","SPG","WELL","VICI","EQR","AVB","XLRE"]},
+ utilities:{label:"Utilities",symbols:["NEE","DUK","SO","CEG","AEP","EXC","D","XLU"]},
+ materials:{label:"Materials & Mining",symbols:["NEM","FCX","NUE","LIN","APD","ECL","SHW","ALB","XLB"]},
+ transportation:{label:"Transportation & Logistics",symbols:["UBER","UPS","FDX","UNP","CSX","DAL","UAL","LUV","XPO","CHRW"]},
+ travel:{label:"Travel, Hotels & Restaurants",symbols:["BKNG","MAR","HLT","ABNB","CCL","RCL","EXPE","MCD","SBUX","YUM"]},
+ etfs:{label:"ETFs & Broad Market",symbols:["SPY","QQQ","IWM","DIA","VTI","VOO","XLP","XLF","XLK","XLE","XLV","XLU","XLY","XLI","XLB","XLC","XLRE"]},
+ cryptoequities:{label:"Crypto-Linked Equities",symbols:["COIN","MSTR","HOOD","RIOT","MARA","CLSK","BITF"]}
+};
+const el=id=>document.getElementById(id),sectorEl=el("market-sector"),symbolEl=el("market-symbol-select"),timeEl=el("market-timeframe"),modeEl=el("market-scan-mode"),sizeEl=el("market-batch-size"),statusEl=el("market-scan-status"),rowsEl=el("market-results-body"),badge=el("market-provider-badge"),providerState=el("market-provider-state");
+let results=[],cache=new Map(),scanSequence=0,lastChartKey="",chartMounted=false;
+function esc(v){return String(v==null?"—":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function fmt(v,d){const n=Number(v);return Number.isFinite(n)?n.toLocaleString("en-US",{minimumFractionDigits:d||0,maximumFractionDigits:d||2}):"—";}
+function money(v){const n=Number(v);return Number.isFinite(n)?"$"+fmt(n,2):"—";}
+function sector(){return sectors[sectorEl.value]||sectors.staples;}
+function tf(){
+ const t=timeEl.value;
+ if(t==="6m")return {interval:"1d",limit:150,chartInterval:"D",range:"6M",label:"6M · daily history"};
+ if(t==="1yr")return {interval:"1d",limit:300,chartInterval:"D",range:"12M",label:"1yr · daily history"};
+ if(t==="1d")return {interval:"1d",limit:300,chartInterval:"D",range:null,label:"1D"};
+ if(t==="4h")return {interval:"4h",limit:300,chartInterval:"240",range:null,label:"4H"};
+ if(t==="1h")return {interval:"1h",limit:300,chartInterval:"60",range:null,label:"1H"};
+ if(t==="15m")return {interval:"15m",limit:300,chartInterval:"15",range:null,label:"15m"};
+ return {interval:"5m",limit:300,chartInterval:"5",range:null,label:"5m"};
+}
+function clearResults(message){
+ results=[];cache=new Map();
+ rowsEl.innerHTML='<tr><td colspan="8" class="small">No current results. Run a provider-backed scan for this sector and timeframe.</td></tr>';
+ if(message)statusEl.textContent=message;
+ badge.textContent="NOT SCANNED";badge.className="market-state-badge warn";
+ providerState.textContent="No provider scan has returned usable bars for this selection.";
+}
+function populateSymbols(){
+ const d=sector(),prior=symbolEl.value;
+ symbolEl.innerHTML=d.symbols.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join("");
+ symbolEl.value=d.symbols.includes(prior)?prior:d.symbols[0];
+ clearResults("Sector changed to "+d.label+". Choose a symbol or run its provider-backed scan.");
+ updateChartLabels();
+}
+function updateChartLabels(){
+ el("market-chart-symbol-label").textContent=symbolEl.value||"WMT";
+ el("market-chart-timeframe").textContent=tf().label;
+ el("market-chart-description").textContent="TradingView embedded chart · displayed market-data delays and availability depend on symbol, exchange and provider.";
+}
+function tvSymbol(symbol){
+ const s=String(symbol||"WMT").toUpperCase();
+ if(["XLP","XLY","XLF","XLK","XLE","XLV","XLU","XLB","XLC","XLI","XLRE"].includes(s))return "AMEX:"+s;
+ if(s==="BF.B")return "NYSE:BF.B";
+ return s;
+}
+function loadChart(symbol){
+ if(!symbol)return;
+ const t=tf(),container=el("market-tradingview-chart"),sym=tvSymbol(symbol),key=sym+"|"+t.chartInterval+"|"+(t.range||"");
+ updateChartLabels();
+ if(key===lastChartKey&&chartMounted)return;
+ lastChartKey=key;chartMounted=false;
+ const root=document.createElement("div");root.className="tradingview-widget-container";root.style.height="100%";root.style.width="100%";
+ const box=document.createElement("div");box.className="tradingview-widget-container__widget";box.style.height="calc(100% - 32px)";box.style.width="100%";root.appendChild(box);container.innerHTML="";container.appendChild(root);
+ const script=document.createElement("script");script.type="text/javascript";script.src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";script.async=true;
+ const cfg={autosize:true,symbol:sym,interval:t.chartInterval,timezone:"America/New_York",theme:"dark",style:"1",locale:"en",backgroundColor:"rgba(5,14,24,1)",enable_publishing:false,allow_symbol_change:true,save_image:true,hide_top_toolbar:false,hide_side_toolbar:false,hide_legend:false,withdateranges:true,details:true,hotlist:false,calendar:false,studies:["MAExp@tv-basicstudies","MAExp@tv-basicstudies","MAExp@tv-basicstudies","VWAP@tv-basicstudies","RSI@tv-basicstudies","MACD@tv-basicstudies","StochasticRSI@tv-basicstudies"],support_host:"https://www.tradingview.com"};
+ if(t.range)cfg.range=t.range;
+ script.innerHTML=JSON.stringify(cfg);box.appendChild(script);chartMounted=true;
+}
+function setBadge(text,kind){badge.textContent=text;badge.className="market-state-badge"+(kind?" "+kind:"");}
+function setEngineControls(symbol){
+ const t=tf();
+ el("rticDataProvider").value="tickerbot";el("rticDataSymbol").value=symbol;el("rticDataInterval").value=t.interval;el("rticDataLimit").value=String(t.limit);
+}
+function bias(scan){return scan.score>=60?"BULLISH BIAS":scan.score<=40?"BEARISH BIAS":"MIXED / WAIT";}
+function qualifies(scan){
+ const edge=Math.abs(Number(scan.score)-50),available=Number(scan.available)||0,liq=Number(scan.liquidity)||0,rvol=Number(scan.rvol);
+ if(modeEl.value==="sniper")return available>=8&&edge>=20&&Number.isFinite(rvol)&&rvol>=1.2&&liq>=6;
+ return available>=6&&edge>=10&&liq>=4;
+}
+function renderRows(){
+ if(!results.length){rowsEl.innerHTML='<tr><td colspan="8" class="small">No results yet.</td></tr>';return;}
+ const ranked=results.slice().sort((a,b)=>{if(a.error&&!b.error)return 1;if(!a.error&&b.error)return -1;if(a.error&&b.error)return a.symbol.localeCompare(b.symbol);const qa=qualifies(a.scan),qb=qualifies(b.scan);if(qa!==qb)return qa?-1:1;return Math.abs(b.scan.score-50)-Math.abs(a.scan.score-50);});
+ rowsEl.innerHTML=ranked.map(r=>{
+  if(r.error)return '<tr><td><b>'+esc(r.symbol)+'</b></td><td colspan="6" class="small">'+esc(r.error)+'</td><td><span class="market-scan-tag filtered">NO DATA</span></td></tr>';
+  const s=r.scan,q=qualifies(s),last=r.lastBar?r.lastBar.close:(s.last?s.last.close:NaN),rv=Number.isFinite(s.rvol)?fmt(s.rvol,2)+"×":"—";
+  return '<tr><td><button type="button" class="market-symbol-link" data-market-analyze="'+esc(r.symbol)+'">'+esc(r.symbol)+'</button></td><td class="num">'+money(last)+'</td><td class="num">'+fmt(s.score,0)+'/100</td><td class="num">'+fmt(s.liquidity,0)+'/10</td><td class="num">'+rv+'</td><td>'+esc(bias(s))+'</td><td><span class="market-scan-tag">'+modeEl.value.toUpperCase()+'</span></td><td><span class="market-scan-tag '+(q?"qualified":"filtered")+'">'+(q?"QUALIFIED CANDIDATE":"WAIT / FILTERED")+'</span></td></tr>';
+ }).join("");
+}
+function noteForResult(r){
+ const s=r.scan;
+ setBadge("TICKERBOT BARS RECEIVED","good");
+ providerState.textContent="Provider response received for "+r.symbol+"; "+r.barsCount+" usable "+r.interval+" bars. Bars are historical OHLCV, not a promise of exchange-real-time quotes.";
+ statusEl.textContent=r.symbol+" · "+r.interval+" · last bar "+money(r.lastBar.close)+" · RTIC "+fmt(s.score,0)+"/100 · "+bias(s)+" · "+(qualifies(s)?"passes current "+modeEl.value.toUpperCase()+" screening thresholds":"WAIT — current "+modeEl.value.toUpperCase()+" filter not met")+". Timestamp: "+(r.asOf||new Date((r.lastBar.time||0)*1000).toLocaleString())+".";
+}
+function showDetail(r){
+ if(!r||r.error)return;
+ if(!window.ROLYFEData||typeof window.ROLYFEData.renderCachedScan!=="function"){statusEl.textContent="Shared RTIC scanner module unavailable. Refresh the page and try again.";setBadge("SCANNER MODULE UNAVAILABLE","warn");return;}
+ symbolEl.value=r.symbol;setEngineControls(r.symbol);el("market-indicator-details").open=true;
+ window.ROLYFEData.renderCachedScan(r);loadChart(r.symbol);noteForResult(r);
+}
+async function scanOne(symbol){
+ const t=tf();
+ if(!window.ROLYFEData||typeof window.ROLYFEData.fetchAndScan!=="function")throw new Error("Shared RTIC engine did not load. Check network access and refresh this page.");
+ setEngineControls(symbol);statusEl.textContent="Requesting Tickerbot historical bars for "+symbol+" ("+t.interval+")…";setBadge("REQUESTING PROVIDER","warn");
+ const r=await window.ROLYFEData.fetchAndScan(symbol,t.interval,t.limit);cache.set(symbol,r);return r;
+}
+async function runOne(){
+ const symbol=symbolEl.value;if(!symbol)return;
+ el("market-run-symbol").disabled=true;
+ try{
+  const r=await scanOne(symbol),old=results.findIndex(x=>x.symbol===symbol);if(old>=0)results[old]=r;else results.unshift(r);
+  renderRows();showDetail(r);
+ }catch(e){setBadge("PROVIDER DATA UNAVAILABLE","warn");providerState.textContent="No usable Tickerbot bars returned for this request.";statusEl.textContent="Scan failed for "+symbol+": "+(e.message||"unknown provider error")+". No demo prices or indicator readings were substituted.";el("rticDataStatus").className="rtic-data-status bad";el("rticDataStatus").textContent=statusEl.textContent;}
+ finally{el("market-run-symbol").disabled=false;}
+}
+async function runSector(){
+ const d=sector(),count=sizeEl.value==="all"?d.symbols.length:Number(sizeEl.value),symbols=d.symbols.slice(0,Math.max(1,count)),seq=++scanSequence;
+ results=[];cache=new Map();renderRows();
+ const btn=el("market-run-sector");btn.disabled=true;el("market-run-symbol").disabled=true;
+ setBadge("SCANNING SECTOR","warn");providerState.textContent="Requesting historical bars from the existing RTIC/Tickerbot path; rows appear as provider responses arrive.";
+ try{
+  for(let i=0;i<symbols.length;i++){
+   if(seq!==scanSequence)return;
+   const s=symbols[i];statusEl.textContent="Scanning "+d.label+" · "+(i+1)+" of "+symbols.length+" · "+s+" · "+tf().label+"…";
+   if(i>0)await new Promise(resolve=>setTimeout(resolve,220));
+   try{const r=await scanOne(s);cache.set(s,r);results.push(r);setBadge("PROVIDER BARS RECEIVED","good");}
+   catch(e){results.push({symbol:s,error:String(e.message||"Provider request failed").slice(0,180)});}
+   renderRows();statusEl.textContent="Sector scan progress · "+(i+1)+"/"+symbols.length+" completed · "+results.filter(x=>!x.error).length+" provider responses · "+results.filter(x=>x.error).length+" unavailable.";
+  }
+  const ok=results.filter(x=>!x.error);
+  if(ok.length){setBadge("PROVIDER RESPONSE RECEIVED","good");providerState.textContent=ok.length+" ticker(s) returned usable historical bars. No synthetic prices are used. Provider timing and access can vary by ticker and plan.";statusEl.textContent="Completed "+d.label+" batch: "+ok.length+" provider-backed RTIC scan(s), "+results.filter(x=>x.error).length+" unavailable. Click any ticker to open its saved 14-panel RTIC analysis.";renderRows();}
+  else{setBadge("PROVIDER DATA UNAVAILABLE","warn");providerState.textContent="No valid historical bars were returned. This could reflect provider configuration, symbol coverage, entitlement, authentication, or request limits.";statusEl.textContent="No ticker in this batch returned usable bars. Check Provider configuration status and try one symbol. No demo results were shown.";}
+ }finally{btn.disabled=false;el("market-run-symbol").disabled=false;}
+}
+sectorEl.addEventListener("change",populateSymbols);
+symbolEl.addEventListener("change",updateChartLabels);
+timeEl.addEventListener("change",function(){clearResults("Timeframe changed to "+tf().label+". Run a new scan to refresh bars and indicator calculations.");lastChartKey="";chartMounted=false;if(el("market-lab-panel").open)loadChart(symbolEl.value);});
+modeEl.addEventListener("change",function(){renderRows();statusEl.textContent="Screening mode changed to "+modeEl.options[modeEl.selectedIndex].text+". Existing provider results have been re-filtered; no new data request was made.";});
+el("market-run-sector").addEventListener("click",runSector);
+el("market-run-symbol").addEventListener("click",runOne);
+el("market-open-chart").addEventListener("click",function(){loadChart(symbolEl.value);});
+rowsEl.addEventListener("click",function(e){const b=e.target.closest("[data-market-analyze]");if(!b)return;const s=b.getAttribute("data-market-analyze"),r=cache.get(s);symbolEl.value=s;if(r)showDetail(r);else runOne();});
+el("market-save-oscillators").addEventListener("click",function(){if(window.ROLYFEData&&window.ROLYFEData.setOscillatorSettings){window.ROLYFEData.setOscillatorSettings();statusEl.textContent="MACD / Stochastic settings updated through the existing RTIC engine."; }});
+el("market-lab-panel").addEventListener("toggle",function(){if(this.open&&!chartMounted)loadChart(symbolEl.value||"WMT");});
+populateSymbols();setEngineControls(symbolEl.value);
+})();
+</script>
+
 </body>
 </html>
