@@ -51,3 +51,10 @@ Keep provider credentials in Supabase project secrets. Never put API keys in HTM
 
 **RO’Lyfe Live Sports Center™**  
 *All Sports. One Command Center.*
+
+
+## Visual design and coverage
+- Dark high-tech interface with restrained amber-orange glow and orange-accented primary actions.
+- Soccer remains the first-priority sport, with shortcuts to FIFA, UEFA and the Premier League.
+- Tennis includes ATP Tour and WTA links; golf and cricket include PGA TOUR and ICC resources.
+- Official links are destinations, not a guarantee of live-score coverage, stream availability, or regional access.
