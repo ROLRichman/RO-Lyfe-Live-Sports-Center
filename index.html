@@ -71,10 +71,55 @@
 @media(max-width:850px){.market-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.market-statusband{grid-template-columns:1fr}.rtic-provider-list{grid-template-columns:repeat(2,minmax(0,1fr))}.market-osc-controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.market-lab-wrap{padding:10px}.market-tradingview-chart{height:410px;min-height:360px}.rtic-data-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.rtic-scan-list,.market-oscillator-grid{grid-template-columns:1fr}.market-results-table{min-width:720px}.market-controls{grid-template-columns:1fr 1fr}.market-provider-list{grid-template-columns:1fr}}
 
+
+/* RO'Lyfe workspace navigation + chart controls */
+.chart-tools{display:grid;grid-template-columns:auto minmax(100px,1fr) auto;align-items:center;gap:12px;padding:12px 14px;background:#091827;border-bottom:1px solid var(--line)}
+.chart-tools label{font-size:.8rem;color:var(--muted);font-weight:800;white-space:nowrap}.chart-tools output{color:#ffc18e;margin-left:5px}.chart-tools input{width:100%;accent-color:var(--orange);min-width:80px}.chart-tools button{white-space:nowrap}
+.market-tradingview-chart{transition:height .15s ease;min-height:380px}
+.rol-workspace-toggle{position:fixed;left:12px;top:42%;z-index:40;border:1px solid #34546a;border-radius:0 14px 14px 0;padding:13px 10px;background:linear-gradient(160deg,#102c42,#091522);box-shadow:0 8px 30px #0008;color:var(--text);font-weight:900;writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.08em}
+.rol-workspace-panel{position:fixed;left:0;top:12%;bottom:12%;z-index:39;width:min(320px,86vw);padding:18px 16px 22px;background:rgba(5,15,26,.97);border:1px solid #31516a;border-left:0;border-radius:0 18px 18px 0;box-shadow:0 18px 60px #000a;overflow:auto;transform:translateX(-105%);transition:transform .22s ease;backdrop-filter:blur(18px)}
+.rol-workspace-panel.open{transform:translateX(0)}.rol-workspace-panel h3{margin:0 0 5px;color:#ffc18e}.rol-workspace-panel p{margin:0 0 12px;color:var(--muted);font-size:.8rem}.rol-workspace-group{margin:14px 0}.rol-workspace-group summary{cursor:pointer;font-weight:850;color:var(--cyan);padding:9px 0}.rol-workspace-links{display:grid;gap:7px}.rol-workspace-links a{display:block;padding:9px 11px;border:1px solid #1e3850;border-radius:10px;background:#0d1b2c;color:var(--text);font-size:.86rem}.rol-workspace-links a:hover{border-color:var(--orange);text-decoration:none}
+.rol-ai-fab{position:fixed;right:18px;bottom:18px;z-index:50;width:64px;height:64px;border-radius:50%;border:2px solid #ffd0a6;background:radial-gradient(circle at 30% 20%,#ffcf99,#ff8738 48%,#552a1c);color:#1c1008;font-size:27px;box-shadow:0 0 0 6px #ff8b3d1c,0 8px 28px #0009;display:grid;place-items:center}
+.rol-ai-fab span{font-size:9px;display:block;line-height:1.1;letter-spacing:.04em}.rol-ai-panel{position:fixed;right:16px;bottom:94px;z-index:49;width:min(340px,calc(100vw - 28px));padding:16px;border:1px solid #45647b;border-radius:18px;background:rgba(7,17,31,.98);box-shadow:0 16px 55px #000b;display:none}.rol-ai-panel.open{display:block}.rol-ai-panel h3{margin:0 0 4px;color:#ffc18e}.rol-ai-panel p{margin:0 0 12px;color:var(--muted);font-size:.82rem}.rol-ai-panel textarea{width:100%;min-height:78px;resize:vertical;background:#0d1b2c;border:1px solid #29445d;border-radius:10px;padding:10px;color:var(--text);font:inherit}.rol-ai-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.rol-ai-actions a,.rol-ai-actions button{font-size:.8rem}
+@media(max-width:600px){.chart-tools{grid-template-columns:1fr auto;gap:8px}.chart-tools label{grid-column:1/-1}.chart-tools input{grid-column:1}.chart-tools button{grid-column:2;grid-row:2}.rol-workspace-toggle{left:0;top:auto;bottom:110px;font-size:.72rem;padding:11px 7px}.rol-ai-fab{right:12px;bottom:12px;width:58px;height:58px}.rol-ai-panel{right:10px;bottom:80px}}
+
 </style>
 </head>
 <body>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="RO’Lyfe Live Sports Center home">RO’LYFE <span style="color:var(--cyan)">LIVE SPORTS CENTER™</span><small>ALL SPORTS. ONE COMMAND CENTER.</small></a><nav class="navlinks" aria-label="Main navigation"><a href="#scores">Scores</a><a href="#sports">Sports</a><a href="#news">News & Talk</a><a href="#watch">Where to Watch</a></nav></div></header>
+<button class="rol-workspace-toggle" id="rol-workspace-toggle" type="button" aria-expanded="false" aria-controls="rol-workspace-panel">RO’LYFE HUB</button>
+<aside class="rol-workspace-panel" id="rol-workspace-panel" aria-label="RO’Lyfe workspace menu">
+ <h3>RO’Lyfe Command Hub</h3><p>Move between your connected learning, market, relocation, media and game workspaces.</p>
+ <div class="rol-workspace-links">
+  <a href="https://rolrichman.github.io/RO-Lyfe-Live-Sports-Center/#scores">⚽ Live Sports Center</a>
+  <a href="https://rolrichman.github.io/RO-Lyfe-Tactical-Intelligence-Center-/">📈 Tactical Intelligence / RTIC</a>
+  <a href="https://rolrichman.github.io/RO-Lyfe-Trading-Intelligence-Classroom/">🎓 Trading Intelligence Classroom</a>
+  <a href="https://rolrichman.github.io/rolyfe-family-wealth-academy/">👨‍👩‍👦 Family Wealth Academy</a>
+  <a href="https://rolrichman.github.io/rolyfe-relocation-intelligence/">🧭 Relocation Intelligence</a>
+  <a href="https://rolrichman.github.io/rolyfe-video-hub/">🎬 Video Hub</a>
+  <a href="https://rolrichman.github.io/rolyfe-egaming/">🎮 eGaming</a>
+  <a href="https://github.com/ROLRichman/root-lyfe-pool">🎱 Pool project on GitHub</a>
+  <a href="https://rolrichman.github.io/rolyfe-property-research-intelligence/">🏠 Property Research Engine</a>
+  <a href="https://rolrichman.github.io/ro-lyfe-tactical-intelligence-execution-center/">🧠 Tactical Execution Center</a>
+  <a href="https://rolrichman.github.io/rolyfe-acquisition-engine/">🏗️ Acquisition Engine</a>
+  <a href="https://github.com/ROLRichman">Browse all public GitHub projects ↗</a>
+ </div>
+ <details class="rol-workspace-group"><summary>More RO’Lyfe systems</summary><div class="rol-workspace-links">
+  <a href="https://rolrichman.github.io/rolyfe-contract-documents-hub/">📄 Contract Documents Hub</a>
+  <a href="https://rolrichman.github.io/rolyfe-funding/">💵 Funding Hub</a>
+  <a href="https://rolrichman.github.io/RO-Lyfe-AI-Robotics-Hub/">🤖 AI & Robotics Hub</a>
+  <a href="https://rolrichman.github.io/rolyfe-command-center/">🌐 Command Center</a>
+  <a href="https://github.com/ROLRichman/RO-Lyfe-Strategy-Arena-">🕹️ Strategy Arena</a>
+ </div></details>
+</aside>
+<button class="rol-ai-fab" id="rol-ai-fab" type="button" aria-label="Open RO’Lyfe AI assistant" aria-expanded="false">✦<span>AI</span></button>
+<section class="rol-ai-panel" id="rol-ai-panel" aria-label="RO’Lyfe AI assistant">
+ <h3>✦ RO’Lyfe AI Desk</h3><p>Ask about the page, market workflow, sports, relocation, or which RO’Lyfe workspace to open. This launcher opens ChatGPT for a full AI conversation; it does not pretend this static page has its own AI backend.</p>
+ <label for="rol-ai-question" class="small">What do you want to work on?</label>
+ <textarea id="rol-ai-question" placeholder="Example: Help me compare sectors, indicators, and risk before a practice trade."></textarea>
+ <div class="rol-ai-actions"><button type="button" class="primary" id="rol-ai-open-chat">Open AI assistant ↗</button><button type="button" id="rol-ai-close">Close</button></div>
+ <p style="margin-top:10px">Quick links: <a href="https://rolrichman.github.io/RO-Lyfe-Tactical-Intelligence-Center-/">RTIC</a> · <a href="https://rolrichman.github.io/rolyfe-video-hub/">Videos</a> · <a href="https://rolrichman.github.io/rolyfe-egaming/">Games</a></p>
+</section>
 <main id="top" class="wrap">
 <section class="hero"><div class="eyebrow">Independent sports intelligence hub</div><h1>Follow the action.<br><span>Find your game.</span></h1><p>A mobile-first command center for scores, schedules, matchups, sports stories, podcasts, and official viewing resources. Built for every fan—not just one team.</p><div class="actions"><a class="btn primary" href="#scores">Open Scoreboard ↓</a><a class="btn" href="#sports">Explore All Sports</a></div>
 <div class="statusgrid"><div class="stat"><b>15 sports categories</b><span>A growing home for fans across leagues</span></div><div class="stat"><b>Scoreboard + schedules</b><span>Connected feeds for selected competitions</span></div><div class="stat"><b>Official viewing links</b><span>Find authorized broadcasters and services</span></div></div></section>
@@ -122,6 +167,7 @@
    <div class="market-table-wrap"><table class="market-results-table"><thead><tr><th>Symbol</th><th>Last bar close</th><th>RTIC score</th><th>Liquidity</th><th>RVOL</th><th>Directional context</th><th>Mode filter</th><th>Result</th></tr></thead><tbody id="market-results-body"><tr><td colspan="8" class="small">No results yet. Prices and scores appear only after the provider returns usable bars.</td></tr></tbody></table></div>
    <div class="market-chart-card">
     <div class="market-chart-heading"><div><h3>Price Chart · <span id="market-chart-symbol-label" class="market-chart-title">WMT</span></h3><p id="market-chart-description">TradingView embedded chart · provider/exchange delays may apply.</p></div><span id="market-chart-timeframe" class="market-state-badge">5m</span></div>
+    <div class="chart-tools" aria-label="Chart display controls"><label for="market-chart-height">Chart height <output id="market-chart-height-value">480 px</output></label><input id="market-chart-height" type="range" min="380" max="900" step="20" value="480" aria-label="Adjust chart height"><button type="button" id="market-chart-refresh">↻ Refresh chart</button></div>
     <div id="market-tradingview-chart" class="market-tradingview-chart"><div class="market-chart-fallback">Open the Market Lab or select a symbol to load the chart.</div></div>
    </div>
    <details class="dropdown-panel" id="market-indicator-details">
@@ -172,7 +218,9 @@
 <footer class="footer"><div class="wrap"><b>RO’Lyfe Live Sports Center™</b><p>All Sports. One Command Center.</p><p>Independent sports information project. Not affiliated with or endorsed by any league, team, broadcaster, or data provider. Scores and schedules may be delayed, incomplete, or subject to provider restrictions.</p><p>© RO’Lyfe · Built to help fans follow the action, explore the stories, and find the game.</p><a href="#top">Back to top ↑</a></div></footer>
 <script>
 (function(){
-const API='https://nzduinxmsmmdbonefifi.supabase.co/functions/v1/sports-data';
+const API_BASE='https://nzduinxmsmmdbonefifi.supabase.co/functions/v1';
+const SUPABASE_ANON_JWT='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56ZHVpbnhtc21tZGJvbmVmaWZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNDI5NjMsImV4cCI6MjEwODgxODk2M30.N-2jV4a6wU9315lkVCvhDn7tJJ4ryzDHBeItSRztEh8';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_lD4rMx8S_OvBRHNWajgQKQ_hYmCjFzY';
 let feed='soccer';
 const list=document.getElementById('scores-list'), message=document.getElementById('message'), mode=document.getElementById('mode'), date=document.getElementById('date');
 const today=new Date();date.value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');
@@ -182,7 +230,7 @@ function render(items){if(!Array.isArray(items)||!items.length){list.innerHTML='
 list.innerHTML=items.map(g=>{const home=first(g,['teams.home.name','home.name','home_team.name','teams.home','homeTeam','home']);const away=first(g,['teams.away.name','away.name','away_team.name','teams.away','awayTeam','away']);const hs=first(g,['scores.home.total','scores.home','goals.home','score.home','home_score']);const as=first(g,['scores.away.total','scores.away','goals.away','score.away','away_score']);const status=first(g,['fixture.status.long','status.long','status.description','status','game.status']);const time=first(g,['fixture.date','date','game.date','timestamp']);const league=first(g,['league.name','league','competition.name']);let dt='';if(time!=='—'){const d=new Date(time);if(!isNaN(d))dt=d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
 return '<article class="game"><div class="gamehead"><span>'+esc(league)+'</span><span class="'+(/live|progress|quarter|half|in play/i.test(status)?'live':'')+'">'+esc(status)+'</span></div><div class="teams"><div class="team"><span>'+esc(home)+'</span><span class="score">'+esc(hs)+'</span></div><div class="team"><span>'+esc(away)+'</span><span class="score">'+esc(as)+'</span></div></div><div class="gamefoot">'+esc(dt||'Time not provided by feed')+'</div></article>';}).join('');}
 async function load(){const selectedMode=mode.value;const params=new URLSearchParams({feed,mode:selectedMode});if(selectedMode==='schedule')params.set('date',date.value);message.textContent='Loading '+(feed==='soccer'?'soccer':'American football')+' '+(selectedMode==='live'?'live scores':'schedule')+'…';list.innerHTML='<div class="empty">Contacting sports data provider…</div>';document.getElementById('refresh').disabled=true;
-try{const res=await fetch(API+'?'+params.toString(),{headers:{'Accept':'application/json'}});const body=await res.json();if(!res.ok)throw new Error(body.error||body.message||('Request failed ('+res.status+')'));const items=Array.isArray(body)?body:(body.response||body.games||body.data||body.fixtures||[]);render(items);message.textContent='Feed response received · '+items.length+' game(s) · '+new Date().toLocaleTimeString();}catch(e){list.innerHTML='<div class="empty">The score feed could not be loaded right now. Please try again shortly.</div>';message.textContent='Feed unavailable: '+e.message+' · The rest of the sports hub remains available.';}finally{document.getElementById('refresh').disabled=false;}}
+try{const endpoint=feed==='football'?'sports-nfl-scores':'sports-live-scores';const res=await fetch(API_BASE+'/'+endpoint+'?'+params.toString(),{headers:{'Accept':'application/json','apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+SUPABASE_ANON_JWT}});const body=await res.json();if(!res.ok)throw new Error(body.error||body.message||('Request failed ('+res.status+')'));const items=Array.isArray(body)?body:(body.response||body.games||body.data||body.fixtures||[]);render(items);message.textContent='Feed response received · '+items.length+' game(s) · '+new Date().toLocaleTimeString();}catch(e){list.innerHTML='<div class="empty">The score feed could not be loaded right now. Please try again shortly.</div>';message.textContent='Feed unavailable: '+e.message+' · The rest of the sports hub remains available.';}finally{document.getElementById('refresh').disabled=false;}}
 document.querySelectorAll('[data-feed]').forEach(b=>b.addEventListener('click',()=>{feed=b.dataset.feed;document.querySelectorAll('[data-feed]').forEach(x=>x.classList.toggle('active',x===b));}));
 document.querySelectorAll('[data-jump-feed]').forEach(a=>a.addEventListener('click',()=>{feed=a.dataset.jumpFeed;document.querySelectorAll('[data-feed]').forEach(x=>x.classList.toggle('active',x.dataset.feed===feed));}));
 document.getElementById('refresh').addEventListener('click',load);mode.addEventListener('change',()=>{date.style.display=mode.value==='schedule'?'block':'none';});date.style.display='none';
@@ -343,6 +391,24 @@ rowsEl.addEventListener("click",function(e){const b=e.target.closest("[data-mark
 el("market-save-oscillators").addEventListener("click",function(){if(window.ROLYFEData&&window.ROLYFEData.setOscillatorSettings){window.ROLYFEData.setOscillatorSettings();statusEl.textContent="MACD / Stochastic settings updated through the existing RTIC engine."; }});
 el("market-lab-panel").addEventListener("toggle",function(){if(this.open&&!chartMounted)loadChart(symbolEl.value||"WMT");});
 populateSymbols();setEngineControls(symbolEl.value);
+})();
+</script>
+
+
+<script>
+(function(){
+ const byId=id=>document.getElementById(id);
+ const toggle=byId('rol-workspace-toggle'),menu=byId('rol-workspace-panel'),fab=byId('rol-ai-fab'),ai=byId('rol-ai-panel');
+ toggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));});
+ fab.addEventListener('click',()=>{const open=ai.classList.toggle('open');fab.setAttribute('aria-expanded',String(open));});
+ byId('rol-ai-close').addEventListener('click',()=>{ai.classList.remove('open');fab.setAttribute('aria-expanded','false');});
+ byId('rol-ai-open-chat').addEventListener('click',()=>{const q=byId('rol-ai-question').value.trim();const url='https://chatgpt.com/'+(q?'?q='+encodeURIComponent(q):'');window.open(url,'_blank','noopener');});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){menu.classList.remove('open');ai.classList.remove('open');toggle.setAttribute('aria-expanded','false');fab.setAttribute('aria-expanded','false');}});
+ const slider=byId('market-chart-height'),value=byId('market-chart-height-value'),chart=byId('market-tradingview-chart'),refresh=byId('market-chart-refresh');
+ function applyHeight(){const h=Number(slider.value)||480;chart.style.height=h+'px';value.textContent=h+' px';}
+ slider.addEventListener('input',applyHeight);applyHeight();
+ refresh.addEventListener('click',()=>{refresh.disabled=true;refresh.textContent='↻ Refreshing…';const iframe=chart.querySelector('iframe');if(iframe){const src=iframe.getAttribute('src');if(src){iframe.setAttribute('src',src);}}else{const opener=byId('market-open-chart');if(opener)opener.click();}
+ setTimeout(()=>{refresh.disabled=false;refresh.textContent='↻ Refresh chart';},900);});
 })();
 </script>
 
