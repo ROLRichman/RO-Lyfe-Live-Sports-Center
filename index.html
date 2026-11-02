@@ -107,7 +107,7 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
 </head>
 <body>
 <script>
-(function(){const mode=new URLSearchParams(location.search).get('embed');if(mode==='classroom')document.documentElement.classList.add('classroom-embed');if(mode==='market-lab'){document.documentElement.classList.add('market-lab-embed');const panel=document.getElementById('market-lab-panel');if(panel)panel.open=true;}})();
+(function(){const mode=new URLSearchParams(location.search).get('embed');if(mode==='classroom')document.documentElement.classList.add('classroom-embed');if(mode==='market-lab'){document.documentElement.classList.add('market-lab-embed');document.addEventListener('DOMContentLoaded',()=>{const panel=document.getElementById('market-lab-panel');if(panel)panel.open=true;});}})();
 </script>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="RO’Lyfe Live Sports Center home">RO’LYFE <span style="color:var(--cyan)">LIVE SPORTS CENTER™</span><small>ALL SPORTS. ONE COMMAND CENTER.</small></a><nav class="navlinks" aria-label="Main navigation"><a href="#scores">Scores</a><a href="#sports">Sports</a><a href="#news">News & Talk</a><a href="#watch">Where to Watch</a></nav></div></header>
 <button class="rol-workspace-toggle" id="rol-workspace-toggle" type="button" aria-expanded="false" aria-controls="rol-workspace-panel">RO’LYFE HUB</button>
