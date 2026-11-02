@@ -7,8 +7,10 @@ RO’Lyfe Live Sports Center™ is a mobile-friendly, independent sports informa
 ## Current website
 
 - `index.html` — responsive dark-theme sports hub and scoreboard interface.
-- Live/schedule data requests are routed through the existing Supabase Edge Function at `sports-data`.
-- The currently connected feeds are soccer and American football. Other sport categories link to official resources while data integrations are verified.
+- Live/schedule requests try the secured Supabase Edge Functions `sports-live-scores` (soccer) and `sports-nfl-scores` (American football) first.
+- If the primary provider errors or returns no fixtures, the page checks a public ESPN scoreboard JSON fallback for the Premier League, LALIGA, Serie A, MLS, UEFA Champions League, NFL and College Football. This ESPN endpoint is public but undocumented; it is a fallback, not a guaranteed API contract.
+- Soccer and American football cards select their feed and automatically load the scoreboard. A failed provider request is distinguished from an empty schedule.
+- `?embed=classroom` opens a wider, navigation-reduced Sports Center view for the Trading Classroom. `?embed=market-lab` opens the Sector Scanner + Chart Lab as a standalone embedded workspace.
 - News, podcast, and official viewing links help fans find trusted destinations.
 
 ## Sports categories
@@ -30,15 +32,26 @@ Soccer, basketball, American football, baseball, hockey, Formula 1, MMA, rugby, 
 4. Wait for the Pages deployment to complete. The published address is typically `https://rolrichman.github.io/RO-Lyfe-Live-Sports-Center/`.
 5. Test the site on a phone and verify score-feed responses. If Pages is configured with a different workflow, follow the repository's displayed deployment instructions.
 
-## Supabase data function
+## Supabase sports data functions
 
-The page calls:
+The page calls these secure Edge Function routes:
 
-`https://nzduinxmsmmdbonefifi.supabase.co/functions/v1/sports-data`
+- `https://nzduinxmsmmdbonefifi.supabase.co/functions/v1/sports-live-scores?feed=soccer&mode=live`
+- `https://nzduinxmsmmdbonefifi.supabase.co/functions/v1/sports-nfl-scores?feed=football&mode=live`
 
-Expected query parameters include `feed=soccer|football`, `mode=live|schedule`, and a `date=YYYY-MM-DD` for schedule requests. This frontend expects the function to allow browser CORS requests and return JSON. If the endpoint's current response shape differs, adjust the normalization in `index.html`.
+Schedule mode also sends `date=YYYY-MM-DD`. Provider credentials remain in Supabase Edge Function Secrets. Never put API keys in HTML, JavaScript, GitHub commits, or public browser configuration.
 
-Keep provider credentials in Supabase project secrets. Never put API keys in HTML, JavaScript, GitHub commits, or public browser configuration.
+The mixed fallback uses public ESPN scoreboard JSON endpoints from the browser. It is explicitly labeled as an unofficial/undocumented fallback and may change independently of this repository.
+
+## Browser checks
+
+```bash
+npm install
+npx playwright install chromium
+npm test
+```
+
+The **Sports Center browser tests** mock primary Supabase errors and fallback scoreboards so feed navigation can be tested without depending on live provider uptime. GitHub Actions runs the same checks on pushes and pull requests.
 
 ## Important limitations
 
