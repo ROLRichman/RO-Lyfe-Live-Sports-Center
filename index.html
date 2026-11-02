@@ -181,7 +181,7 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
      <option value="staples" selected>Consumer Staples</option><option value="retail">Retail & Consumer Discretionary</option><option value="electronics">Technology & Electronics</option><option value="semiconductors">Semiconductors & AI</option><option value="communications">Communication Services</option><option value="financials">Financial Services & Banking</option><option value="healthcare">Healthcare & Pharmaceuticals</option><option value="energy">Energy & Oil</option><option value="industrials">Industrials & Defense</option><option value="automotive">Automotive & EV</option><option value="realestate">Real Estate & REITs</option><option value="utilities">Utilities</option><option value="materials">Materials & Mining</option><option value="transportation">Transportation & Logistics</option><option value="travel">Travel, Hotels & Restaurants</option><option value="etfs">ETFs & Broad Market</option><option value="cryptoequities">Crypto-Linked Equities</option>
     </select></label>
     <label>Symbol / ETF<select id="market-symbol-select" aria-label="Choose a sector ticker"></select></label>
-    <label>Timeframe<select id="market-timeframe"><option value="5m" selected>5m</option><option value="15m">15m</option><option value="1h">1H</option><option value="4h">4H</option><option value="1d">1D</option><option value="6m">6M · daily history</option><option value="1yr">1yr · daily history</option></select></label>
+    <label>Timeframe<select id="market-timeframe"><option value="5m" selected>5m</option><option value="15m">15m</option><option value="30m">30m</option><option value="1h">1H</option><option value="2h">2H</option><option value="4h">4H</option><option value="1d">1D</option><option value="1w">1W · weekly bars</option><option value="1mo">1M · monthly bars</option><option value="6m">6M · daily history</option><option value="1yr">1yr · daily history</option></select></label>
     <label>Scanner mode<select id="market-scan-mode"><option value="standard" selected>Standard</option><option value="sniper">Sniper</option></select></label>
     <label>Universe size<select id="market-batch-size"><option value="10" selected>First 10</option><option value="20">First 20</option><option value="all">Entire sector list</option></select></label>
    </div>
@@ -215,7 +215,7 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
    <details class="dropdown-panel"><summary>Provider configuration status</summary><div class="details-body"><div id="rticProviderStatus" class="rtic-provider-list"><div class="rtic-provider">Tickerbot<strong>Checking server configuration…</strong></div></div><p class="market-lab-note">This status indicates whether a server-side secret is configured; it does not certify exchange-real-time data or guarantee a successful quote. Each scan shows its own result and timestamp.</p></div></details>
    <div class="engine-hidden" aria-hidden="true">
     <select id="rticDataProvider"><option value="tickerbot" selected>Tickerbot</option><option value="finnhub">Finnhub</option><option value="alphavantage">Alpha Vantage</option><option value="coingecko">CoinGecko</option></select>
-    <select id="rticWatchlistPick"></select><input id="rticDataSymbol" value="WMT"><select id="rticDataInterval"><option value="5m">5m</option><option value="15m">15m</option><option value="1h">1h</option><option value="4h">4h</option><option value="1d">1d</option><option value="1w">1w</option><option value="1mo">1mo</option></select>
+    <select id="rticWatchlistPick"></select><input id="rticDataSymbol" value="WMT"><select id="rticDataInterval"><option value="5m">5m</option><option value="15m">15m</option><option value="30m">30m</option><option value="1h">1h</option><option value="2h">2h</option><option value="4h">4h</option><option value="1d">1d</option><option value="1w">1w</option><option value="1mo">1mo</option></select>
     <select id="rticDataLimit"><option value="150">150</option><option value="200">200</option><option value="300" selected>300</option><option value="500">500</option></select>
     <button type="button" id="rticFetchButton">Pull secure market data</button>
     <input id="tacticalHmaPeriod" value="31"><input id="tacticalPbLength" value="50"><input id="tacticalPbMultiplier" value="1.5"><input id="tacticalPbBuyEma" value="1"><input id="tacticalPbSellEma" value="13"><input id="tacticalPbVolUp" value="100"><input id="tacticalPbVolDown" value="100"><input id="tacticalPbSpread" value="0.09"><input id="tacticalPbShowLabel" type="checkbox" checked><select id="tacticalPbMoveTo"><option value="UP">UP</option><option value="DOWN">DOWN</option></select>
@@ -372,9 +372,13 @@ function tf(){
  const t=timeEl.value;
  if(t==="6m")return {interval:"1d",limit:150,chartInterval:"D",range:"6M",label:"6M · daily history"};
  if(t==="1yr")return {interval:"1d",limit:300,chartInterval:"D",range:"12M",label:"1yr · daily history"};
+ if(t==="1mo")return {interval:"1mo",limit:120,chartInterval:"M",range:null,label:"1M · monthly bars"};
+ if(t==="1w")return {interval:"1w",limit:300,chartInterval:"W",range:null,label:"1W · weekly bars"};
  if(t==="1d")return {interval:"1d",limit:300,chartInterval:"D",range:null,label:"1D"};
  if(t==="4h")return {interval:"4h",limit:300,chartInterval:"240",range:null,label:"4H"};
+ if(t==="2h")return {interval:"2h",limit:300,chartInterval:"120",range:null,label:"2H"};
  if(t==="1h")return {interval:"1h",limit:300,chartInterval:"60",range:null,label:"1H"};
+ if(t==="30m")return {interval:"30m",limit:300,chartInterval:"30",range:null,label:"30m"};
  if(t==="15m")return {interval:"15m",limit:300,chartInterval:"15",range:null,label:"15m"};
  return {interval:"5m",limit:300,chartInterval:"5",range:null,label:"5m"};
 }
