@@ -335,7 +335,7 @@ document.getElementById('refresh').addEventListener('click',load);
 mode.addEventListener('change',()=>{date.style.display=mode.value==='schedule'?'block':'none';load();});
 date.addEventListener('change',()=>{if(mode.value==='schedule')load();});
 date.style.display='none';
-load();
+if(new URLSearchParams(location.search).get('embed')!=='market-lab')load();
 })();
 </script>
 
