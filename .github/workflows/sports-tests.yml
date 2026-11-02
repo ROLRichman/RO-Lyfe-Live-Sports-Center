@@ -1,0 +1,37 @@
+name: Sports Center browser tests
+
+on:
+  push:
+    branches: [main, feature/sports-mixed-feed-embed-fix]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  playwright:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install test dependencies
+        run: npm install
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run Sports Center browser tests
+        run: npm test
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sports-center-playwright-results
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
