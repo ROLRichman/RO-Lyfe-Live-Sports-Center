@@ -58,7 +58,12 @@ npx playwright install chromium
 npm test
 ```
 
-The current branch has source and test changes; CI status is pending until a pull request is created and Actions completes. The test mocks exercise the fallback logic but do not prove that live ESPN CORS/provider responses are available from every user's browser.
+Pull request: [#1 — Fix mixed soccer and football feeds and responsive embed views](https://github.com/ROLRichman/RO-Lyfe-Live-Sports-Center/pull/1).
+
+- The **Sports Center browser tests** workflow run [#10](https://github.com/ROLRichman/RO-Lyfe-Live-Sports-Center/actions/runs/41540162912) completed successfully on branch head `ef1f0300f1e10749f78ae599f50bce69de2005b2`.
+- The run verified card-triggered feed loading, primary-failure fallback normalization, Market Lab embed visibility/mobile width, Classroom embed width and the YouTube destination.
+- A first CI attempt failed before browser tests because `ubuntu-latest` had advanced to Ubuntu 26.04, unsupported by pinned Playwright 1.56.1; the workflow now uses Ubuntu 24.04. A preceding run also identified the missing npm lockfile/cache config; cache was removed.
+- The test mocks exercise the fallback logic but do not prove live ESPN browser/CORS responses or provider coverage. The pull request is still open and not deployed.
 
 ## 4. Preserve
 
