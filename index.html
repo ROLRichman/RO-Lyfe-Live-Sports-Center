@@ -83,9 +83,32 @@
 .rol-ai-fab span{font-size:9px;display:block;line-height:1.1;letter-spacing:.04em}.rol-ai-panel{position:fixed;right:16px;bottom:94px;z-index:49;width:min(340px,calc(100vw - 28px));padding:16px;border:1px solid #45647b;border-radius:18px;background:rgba(7,17,31,.98);box-shadow:0 16px 55px #000b;display:none}.rol-ai-panel.open{display:block}.rol-ai-panel h3{margin:0 0 4px;color:#ffc18e}.rol-ai-panel p{margin:0 0 12px;color:var(--muted);font-size:.82rem}.rol-ai-panel textarea{width:100%;min-height:78px;resize:vertical;background:#0d1b2c;border:1px solid #29445d;border-radius:10px;padding:10px;color:var(--text);font:inherit}.rol-ai-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.rol-ai-actions a,.rol-ai-actions button{font-size:.8rem}
 @media(max-width:600px){.chart-tools{grid-template-columns:1fr auto;gap:8px}.chart-tools label{grid-column:1/-1}.chart-tools input{grid-column:1}.chart-tools button{grid-column:2;grid-row:2}.rol-workspace-toggle{left:0;top:auto;bottom:110px;font-size:.72rem;padding:11px 7px}.rol-ai-fab{right:12px;bottom:12px;width:58px;height:58px}.rol-ai-panel{right:10px;bottom:80px}}
 
+/* Responsive presentation modes used by the Trading Classroom's same-origin embeds */
+html.classroom-embed body{overflow-x:hidden}
+html.classroom-embed .topbar,html.classroom-embed .rol-workspace-toggle,html.classroom-embed .rol-workspace-panel,html.classroom-embed .rol-ai-fab,html.classroom-embed .rol-ai-panel{display:none!important}
+html.classroom-embed .wrap{width:100%;max-width:none;margin:0}
+html.classroom-embed main.wrap{padding:0 14px}
+html.classroom-embed .hero{padding:24px 0 18px}
+html.classroom-embed .footer{padding-bottom:24px}
+html.market-lab-embed body{overflow-x:hidden}
+html.market-lab-embed .topbar,html.market-lab-embed .rol-workspace-toggle,html.market-lab-embed .rol-workspace-panel,html.market-lab-embed .rol-ai-fab,html.market-lab-embed .rol-ai-panel,html.market-lab-embed footer{display:none!important}
+html.market-lab-embed main#top{width:100%;max-width:none;margin:0;padding:0 10px}
+html.market-lab-embed main#top>section:not(#market-lab){display:none!important}
+html.market-lab-embed #market-lab{padding:8px 0 12px;margin:0}
+html.market-lab-embed #market-lab>.sectionhead{display:none}
+html.market-lab-embed .market-lab-wrap{margin:0;padding:12px}
+html.market-lab-embed .market-statusband{grid-template-columns:1fr}
+html.market-lab-embed .market-controls{grid-template-columns:repeat(2,minmax(0,1fr))}
+html.market-lab-embed .market-table-wrap{overflow-x:auto}
+.score-fallback-links{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.score-fallback-links a{display:inline-flex;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:.78rem}
+@media(max-width:640px){html.market-lab-embed main#top{padding:0 6px}html.market-lab-embed .market-lab-wrap{padding:8px}html.market-lab-embed .market-controls{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+<script>
+(function(){const mode=new URLSearchParams(location.search).get('embed');if(mode==='classroom')document.documentElement.classList.add('classroom-embed');if(mode==='market-lab'){document.documentElement.classList.add('market-lab-embed');const panel=document.getElementById('market-lab-panel');if(panel)panel.open=true;}})();
+</script>
 <header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="RO’Lyfe Live Sports Center home">RO’LYFE <span style="color:var(--cyan)">LIVE SPORTS CENTER™</span><small>ALL SPORTS. ONE COMMAND CENTER.</small></a><nav class="navlinks" aria-label="Main navigation"><a href="#scores">Scores</a><a href="#sports">Sports</a><a href="#news">News & Talk</a><a href="#watch">Where to Watch</a></nav></div></header>
 <button class="rol-workspace-toggle" id="rol-workspace-toggle" type="button" aria-expanded="false" aria-controls="rol-workspace-panel">RO’LYFE HUB</button>
 <aside class="rol-workspace-panel" id="rol-workspace-panel" aria-label="RO’Lyfe workspace menu">
@@ -109,6 +132,7 @@
   <a href="https://rolrichman.github.io/rolyfe-funding/">💵 Funding Hub</a>
   <a href="https://rolrichman.github.io/RO-Lyfe-AI-Robotics-Hub/">🤖 AI & Robotics Hub</a>
   <a href="https://rolrichman.github.io/rolyfe-command-center/">🌐 Command Center</a>
+  <a href="https://rolrichman.github.io/ro-lyfe-auction-capital-machine/">🏛️ Auction Capital Machine</a>
   <a href="https://github.com/ROLRichman/RO-Lyfe-Strategy-Arena-">🕹️ Strategy Arena</a>
  </div></details>
 </aside>
@@ -124,11 +148,11 @@
 <section class="hero"><div class="eyebrow">Independent sports intelligence hub</div><h1>Follow the action.<br><span>Find your game.</span></h1><p>A mobile-first command center for scores, schedules, matchups, sports stories, podcasts, and official viewing resources. Built for every fan—not just one team.</p><div class="actions"><a class="btn primary" href="#scores">Open Scoreboard ↓</a><a class="btn" href="#sports">Explore All Sports</a></div>
 <div class="statusgrid"><div class="stat"><b>15 sports categories</b><span>A growing home for fans across leagues</span></div><div class="stat"><b>Scoreboard + schedules</b><span>Connected feeds for selected competitions</span></div><div class="stat"><b>Official viewing links</b><span>Find authorized broadcasters and services</span></div></div></section>
 <section id="scores"><div class="sectionhead"><div><div class="eyebrow">Game day console</div><h2>Live Scores & Fixtures</h2><p>Choose a connected feed and check today's matchups.</p></div><div class="toolbar" role="group" aria-label="Score feed"><button class="active" data-feed="soccer">⚽ Soccer</button><button data-feed="football">🏈 American Football</button></div></div>
-<div class="resourcegrid" style="margin:14px 0 18px"><div class="resource"><div class="sporticon">🌍</div><div><b><a href="https://www.fifa.com/" target="_blank" rel="noopener">FIFA · International</a></b><p>National teams and global tournaments.</p></div></div><div class="resource"><div class="sporticon">🏆</div><div><b><a href="https://www.uefa.com/" target="_blank" rel="noopener">UEFA · European competitions</a></b><p>Champions League and European match coverage.</p></div></div><div class="resource"><div class="sporticon">⚽</div><div><b><a href="https://www.premierleague.com/" target="_blank" rel="noopener">Premier League</a></b><p>Fixtures, results, tables and club news.</p></div></div></div><div class="controls"><select id="mode" aria-label="Scoreboard mode"><option value="live">Live games</option><option value="schedule">Schedule by date</option></select><input id="date" type="date" aria-label="Schedule date"><button id="refresh" class="primary">Refresh scores</button></div><div id="message" role="status" aria-live="polite">Ready to load the selected sports feed.</div><div id="scores-list" class="scores"><div class="empty">Select a feed and tap <b>Refresh scores</b> to load available data.</div></div><p class="small">Feed availability depends on provider coverage. If no games are returned, it may mean there are no fixtures for that selection or the provider plan does not include them.</p></section>
+<div class="resourcegrid" style="margin:14px 0 18px"><div class="resource"><div class="sporticon">🌍</div><div><b><a href="https://www.fifa.com/" target="_blank" rel="noopener">FIFA · International</a></b><p>National teams and global tournaments.</p></div></div><div class="resource"><div class="sporticon">🏆</div><div><b><a href="https://www.uefa.com/" target="_blank" rel="noopener">UEFA · European competitions</a></b><p>Champions League and European match coverage.</p></div></div><div class="resource"><div class="sporticon">⚽</div><div><b><a href="https://www.premierleague.com/" target="_blank" rel="noopener">Premier League</a></b><p>Fixtures, results, tables and club news.</p></div></div></div><div class="controls"><select id="mode" aria-label="Scoreboard mode"><option value="live">Live games</option><option value="schedule">Schedule by date</option></select><input id="date" type="date" aria-label="Schedule date"><button id="refresh" class="primary">Refresh scores</button></div><div id="message" role="status" aria-live="polite">Ready to load the selected sports feed.</div><div id="scores-list" class="scores"><div class="empty">Connecting to the selected match feed…</div></div><div class="score-fallback-links" aria-label="Official scoreboard alternatives"><a href="https://www.espn.com/soccer/scoreboard" target="_blank" rel="noopener">ESPN Soccer fixtures ↗</a><a href="https://www.espn.com/nfl/scoreboard" target="_blank" rel="noopener">ESPN NFL scoreboard ↗</a><a href="https://www.fifa.com/" target="_blank" rel="noopener">FIFA ↗</a><a href="https://www.uefa.com/" target="_blank" rel="noopener">UEFA ↗</a></div><p class="small">Mixed feed: the secured API-Sports connection is tried first, with an ESPN public scoreboard fallback when that provider is unavailable. The ESPN JSON endpoints are public but undocumented and can change. Coverage is limited to the listed fallback competitions; provider timing and completeness can vary.</p></section>
 <section id="sports"><div class="sectionhead"><div><div class="eyebrow">Across the sporting world</div><h2>Explore Sports</h2><p>Score integrations expand as data coverage is verified.</p></div></div><div class="sportsgrid">
-<article class="sportcard"><div class="sporticon">⚽</div><h3>Soccer</h3><p>Global leagues, fixtures and matchday coverage.</p><a href="#scores" data-jump-feed="soccer">Open soccer scores →</a></article>
+<article class="sportcard"><div class="sporticon">⚽</div><h3>Soccer</h3><p>Global leagues, fixtures and matchday coverage.</p><a href="#scores-list" data-jump-feed="soccer">Open soccer scores →</a></article>
 <article class="sportcard"><div class="sporticon">🏀</div><h3>Basketball</h3><p>Professional and international hoops resources.</p><a href="https://www.nba.com/" target="_blank" rel="noopener">NBA official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏈</div><h3>American Football</h3><p>Football fixture feed with league coverage dependent on provider.</p><a href="#scores" data-jump-feed="football">Open football scores →</a></article>
+<article class="sportcard"><div class="sporticon">🏈</div><h3>American Football</h3><p>Football fixture feed with league coverage dependent on provider.</p><a href="#scores-list" data-jump-feed="football">Open football scores →</a></article>
 <article class="sportcard"><div class="sporticon">⚾</div><h3>Baseball</h3><p>League news, standings and official resources.</p><a href="https://www.mlb.com/" target="_blank" rel="noopener">MLB official site ↗</a></article>
 <article class="sportcard"><div class="sporticon">🏒</div><h3>Hockey</h3><p>Scores and stories from the rink.</p><a href="https://www.nhl.com/" target="_blank" rel="noopener">NHL official site ↗</a></article>
 <article class="sportcard"><div class="sporticon">🎾</div><h3>Tennis</h3><p>ATP and WTA tours, rankings, draws and match coverage.</p><a href="https://www.atptour.com/" target="_blank" rel="noopener">ATP Tour ↗</a><a href="https://www.wtatennis.com/" target="_blank" rel="noopener">WTA Tour ↗</a></article>
@@ -204,7 +228,7 @@
 <div class="resource"><div class="sporticon">📰</div><div><b><a href="https://www.espn.com/" target="_blank" rel="noopener">ESPN</a></b><p>Scores, headlines, analysis and video coverage.</p></div></div>
 <div class="resource"><div class="sporticon">🎙️</div><div><b><a href="https://www.espn.com/radio/" target="_blank" rel="noopener">ESPN Radio</a></b><p>Sports talk and audio programming.</p></div></div>
 <div class="resource"><div class="sporticon">🎧</div><div><b><a href="https://podcasts.apple.com/us/genre/podcasts-sports/id1545" target="_blank" rel="noopener">Apple Podcasts · Sports</a></b><p>Browse sports podcasts across teams and topics.</p></div></div>
-<div class="resource"><div class="sporticon">📺</div><div><b><a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a></b><p>Find official team channels, press conferences and sports shows.</p></div></div>
+<div class="resource"><div class="sporticon">📺</div><div><b><a href="https://www.youtube.com/results?search_query=official+sports+highlights+press+conferences" target="_blank" rel="noopener">YouTube · Sports Highlights</a></b><p>Open a targeted sports search for official highlights, press conferences and team channels.</p></div></div>
 </div></section>
 <section id="watch"><div class="sectionhead"><div><div class="eyebrow">Authorized viewing resources</div><h2>Where to Watch</h2><p>Go to official leagues and services to check broadcast availability in your area.</p></div></div><div class="resourcegrid">
 <div class="resource"><div class="sporticon">📡</div><div><b><a href="https://www.nfl.com/" target="_blank" rel="noopener">NFL official</a></b><p>Official league updates and broadcast information.</p></div></div>
@@ -221,19 +245,97 @@
 const API_BASE='https://nzduinxmsmmdbonefifi.supabase.co/functions/v1';
 const SUPABASE_ANON_JWT='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56ZHVpbnhtc21tZGJvbmVmaWZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNDI5NjMsImV4cCI6MjEwODgxODk2M30.N-2jV4a6wU9315lkVCvhDn7tJJ4ryzDHBeItSRztEh8';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_lD4rMx8S_OvBRHNWajgQKQ_hYmCjFzY';
-let feed='soccer';
-const list=document.getElementById('scores-list'), message=document.getElementById('message'), mode=document.getElementById('mode'), date=document.getElementById('date');
+let feed='soccer',requestId=0;
+const list=document.getElementById('scores-list'),message=document.getElementById('message'),mode=document.getElementById('mode'),date=document.getElementById('date');
 const today=new Date();date.value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');
 function esc(v){return String(v==null?'—':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function first(o,paths){for(const p of paths){let v=o;for(const k of p.split('.'))v=v&&v[k];if(v!==undefined&&v!==null&&v!=='')return v;}return '—';}
-function render(items){if(!Array.isArray(items)||!items.length){list.innerHTML='<div class="empty">No games were returned for this selection. Try the schedule date or switch feeds.</div>';return;}
-list.innerHTML=items.map(g=>{const home=first(g,['teams.home.name','home.name','home_team.name','teams.home','homeTeam','home']);const away=first(g,['teams.away.name','away.name','away_team.name','teams.away','awayTeam','away']);const hs=first(g,['scores.home.total','scores.home','goals.home','score.home','home_score']);const as=first(g,['scores.away.total','scores.away','goals.away','score.away','away_score']);const status=first(g,['fixture.status.long','status.long','status.description','status','game.status']);const time=first(g,['fixture.date','date','game.date','timestamp']);const league=first(g,['league.name','league','competition.name']);let dt='';if(time!=='—'){const d=new Date(time);if(!isNaN(d))dt=d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
-return '<article class="game"><div class="gamehead"><span>'+esc(league)+'</span><span class="'+(/live|progress|quarter|half|in play/i.test(status)?'live':'')+'">'+esc(status)+'</span></div><div class="teams"><div class="team"><span>'+esc(home)+'</span><span class="score">'+esc(hs)+'</span></div><div class="team"><span>'+esc(away)+'</span><span class="score">'+esc(as)+'</span></div></div><div class="gamefoot">'+esc(dt||'Time not provided by feed')+'</div></article>';}).join('');}
-async function load(){const selectedMode=mode.value;const params=new URLSearchParams({feed,mode:selectedMode});if(selectedMode==='schedule')params.set('date',date.value);message.textContent='Loading '+(feed==='soccer'?'soccer':'American football')+' '+(selectedMode==='live'?'live scores':'schedule')+'…';list.innerHTML='<div class="empty">Contacting sports data provider…</div>';document.getElementById('refresh').disabled=true;
-try{const endpoint=feed==='football'?'sports-nfl-scores':'sports-live-scores';const res=await fetch(API_BASE+'/'+endpoint+'?'+params.toString(),{headers:{'Accept':'application/json','apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+SUPABASE_ANON_JWT}});const body=await res.json();if(!res.ok)throw new Error(body.error||body.message||('Request failed ('+res.status+')'));const items=Array.isArray(body)?body:(body.response||body.games||body.data||body.fixtures||[]);render(items);message.textContent='Feed response received · '+items.length+' game(s) · '+new Date().toLocaleTimeString();}catch(e){list.innerHTML='<div class="empty">The score feed could not be loaded right now. Please try again shortly.</div>';message.textContent='Feed unavailable: '+e.message+' · The rest of the sports hub remains available.';}finally{document.getElementById('refresh').disabled=false;}}
-document.querySelectorAll('[data-feed]').forEach(b=>b.addEventListener('click',()=>{feed=b.dataset.feed;document.querySelectorAll('[data-feed]').forEach(x=>x.classList.toggle('active',x===b));}));
-document.querySelectorAll('[data-jump-feed]').forEach(a=>a.addEventListener('click',()=>{feed=a.dataset.jumpFeed;document.querySelectorAll('[data-feed]').forEach(x=>x.classList.toggle('active',x.dataset.feed===feed));}));
-document.getElementById('refresh').addEventListener('click',load);mode.addEventListener('change',()=>{date.style.display=mode.value==='schedule'?'block':'none';});date.style.display='none';
+function render(items){
+ if(!Array.isArray(items)||!items.length){list.innerHTML='<div class="empty">No fixtures were returned for this selection. Try a different date, or use the official scoreboard links below.</div>';return;}
+ list.innerHTML=items.map(g=>{
+  const home=first(g,['teams.home.name','home.name','home_team.name','teams.home','homeTeam','home']);
+  const away=first(g,['teams.away.name','away.name','away_team.name','teams.away','awayTeam','away']);
+  const hs=first(g,['scores.home.total','scores.home','goals.home','score.home','home_score']);
+  const as=first(g,['scores.away.total','scores.away','goals.away','score.away','away_score']);
+  const status=first(g,['fixture.status.long','status.long','status.description','status','game.status']);
+  const time=first(g,['fixture.date','date','game.date','timestamp']);
+  const league=first(g,['league.name','league','competition.name']);
+  let dt='';if(time!=='—'){const d=new Date(time);if(!isNaN(d))dt=d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
+  return '<article class="game"><div class="gamehead"><span>'+esc(league)+'</span><span class="'+(/live|progress|quarter|half|in play|in progress/i.test(status)?'live':'')+'">'+esc(status)+'</span></div><div class="teams"><div class="team"><span>'+esc(home)+'</span><span class="score">'+esc(hs)+'</span></div><div class="team"><span>'+esc(away)+'</span><span class="score">'+esc(as)+'</span></div></div><div class="gamefoot">'+esc(dt||'Time not provided by feed')+'</div></article>';
+ }).join('');
+}
+function normalizeEspnEvent(event,leagueName){
+ const competition=(event.competitions||[])[0]||{},competitors=competition.competitors||[];
+ const home=competitors.find(x=>x.homeAway==='home')||competitors[0]||{};
+ const away=competitors.find(x=>x.homeAway==='away')||competitors[1]||{};
+ const status=event.status?.type?.detail||event.status?.type?.shortDetail||event.status?.type?.description||'Scheduled';
+ return {id:event.id,home:{name:home.team?.displayName||home.team?.name||home.displayName||'Home'},away:{name:away.team?.displayName||away.team?.name||away.displayName||'Away'},scores:{home:home.score??'—',away:away.score??'—'},fixture:{date:event.date,status:{long:status}},league:{name:leagueName}};
+}
+async function espnFallback(){
+ const leagues=feed==='football'
+  ?[{path:'football/nfl',name:'NFL'},{path:'football/college-football',name:'College Football'}]
+  :[{path:'soccer/eng.1',name:'Premier League'},{path:'soccer/esp.1',name:'LALIGA'},{path:'soccer/ita.1',name:'Serie A'},{path:'soccer/usa.1',name:'MLS'},{path:'soccer/uefa.champions',name:'UEFA Champions League'}];
+ const dateQuery=mode.value==='schedule'?'&dates='+encodeURIComponent(date.value.replace(/-/g,'')):'';
+ const responses=await Promise.allSettled(leagues.map(async league=>{
+  const url='https://site.api.espn.com/apis/site/v2/sports/'+league.path+'/scoreboard?limit=100'+dateQuery;
+  const response=await fetch(url,{headers:{Accept:'application/json'},cache:'no-store'});
+  if(!response.ok)throw new Error(league.name+' HTTP '+response.status);
+  const payload=await response.json();
+  return {league:league.name,events:Array.isArray(payload.events)?payload.events:[]};
+ }));
+ const successful=responses.filter(x=>x.status==='fulfilled').map(x=>x.value);
+ const failures=responses.filter(x=>x.status==='rejected').length;
+ const seen=new Set(),events=[];
+ for(const group of successful)for(const event of group.events){
+  const key=event.id||[event.date,event.name,group.league].join('|');
+  if(seen.has(key))continue;seen.add(key);events.push(normalizeEspnEvent(event,group.league));
+ }
+ events.sort((a,b)=>String(a.fixture.date).localeCompare(String(b.fixture.date)));
+ return {items:events,successCount:successful.length,failedCount:failures,leagueCount:leagues.length};
+}
+async function load(){
+ const seq=++requestId,selectedMode=mode.value,selectedFeed=feed;
+ const params=new URLSearchParams({feed,mode:selectedMode});
+ if(selectedMode==='schedule')params.set('date',date.value);
+ const feedName=feed==='soccer'?'soccer':'American football';
+ message.textContent='Trying secure API-Sports '+feedName+' '+(selectedMode==='live'?'live scores':'schedule')+'…';
+ list.innerHTML='<div class="empty">Contacting the primary sports feed…</div>';
+ const refresh=document.getElementById('refresh');refresh.disabled=true;
+ let primaryError='',primaryCount=null;
+ try{
+  const endpoint=feed==='football'?'sports-nfl-scores':'sports-live-scores';
+  const response=await fetch(API_BASE+'/'+endpoint+'?'+params.toString(),{headers:{Accept:'application/json',apikey:SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+SUPABASE_ANON_JWT},cache:'no-store'});
+  const body=await response.json().catch(()=>({}));
+  if(!response.ok||body.ok===false)throw new Error(body.message||body.error||('Request failed ('+response.status+')'));
+  const items=Array.isArray(body)?body:(body.response||body.games||body.data||body.fixtures||[]);
+  primaryCount=items.length;
+  if(items.length){if(seq!==requestId)return;render(items);message.textContent='Primary feed · API-Sports · '+items.length+' game(s) · '+new Date().toLocaleTimeString();return;}
+  primaryError='Primary provider returned 0 fixtures for this selection.';
+ }catch(error){primaryError=error.message||'Primary provider request failed.';}
+ try{
+  message.textContent='Primary feed unavailable or empty. Checking mixed ESPN scoreboard fallback…';
+  const fallback=await espnFallback();
+  if(seq!==requestId)return;
+  if(fallback.items.length){
+   render(fallback.items);
+   message.textContent='Mixed fallback · ESPN public scoreboard · '+fallback.items.length+' matchup(s) across '+fallback.successCount+' of '+fallback.leagueCount+' feed(s) · '+new Date().toLocaleTimeString()+(primaryCount===null?' · Primary feed: '+primaryError:' · Primary feed returned 0');
+  }else{
+   list.innerHTML='<div class="empty">'+(fallback.successCount?'No fixtures were listed by the selected providers for this date or live window.':'No scoreboard provider responded. Use the official score links below while the feeds recover.')+'</div>';
+   message.textContent=(fallback.successCount?'No games returned by fallback':'Fallback feeds unavailable')+' · Primary: '+primaryError+' · ESPN fallback errors: '+fallback.failedCount+'/'+fallback.leagueCount+'.';
+  }
+ }catch(error){
+  if(seq!==requestId)return;
+  list.innerHTML='<div class="empty">The primary and fallback score feeds could not be loaded right now. The official scoreboard links below remain available.</div>';
+  message.textContent='Sports feed unavailable · Primary: '+primaryError+' · Fallback: '+(error.message||'request failed');
+ }finally{if(seq===requestId)refresh.disabled=false;}
+}
+document.querySelectorAll('[data-feed]').forEach(button=>button.addEventListener('click',()=>{feed=button.dataset.feed;document.querySelectorAll('[data-feed]').forEach(item=>item.classList.toggle('active',item===button));load();}));
+document.querySelectorAll('[data-jump-feed]').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();feed=link.dataset.jumpFeed;document.querySelectorAll('[data-feed]').forEach(item=>item.classList.toggle('active',item.dataset.feed===feed));document.getElementById('scores').scrollIntoView({behavior:'smooth',block:'start'});load();}));
+document.getElementById('refresh').addEventListener('click',load);
+mode.addEventListener('change',()=>{date.style.display=mode.value==='schedule'?'block':'none';load();});
+date.addEventListener('change',()=>{if(mode.value==='schedule')load();});
+date.style.display='none';
+load();
 })();
 </script>
 
@@ -413,5 +515,15 @@ populateSymbols();setEngineControls(symbolEl.value);
 })();
 </script>
 
+<script>
+(function(){
+ const mode=new URLSearchParams(location.search).get('embed');
+ if(!mode||window.parent===window)return;
+ const send=()=>{try{window.parent.postMessage({type:'rol-sports-embed-height',height:Math.ceil(document.documentElement.scrollHeight)},location.origin);}catch(_){}};
+ if('ResizeObserver' in window){const observer=new ResizeObserver(send);observer.observe(document.body);}
+ window.addEventListener('load',send);window.addEventListener('resize',send);
+ [0,150,500,1200,2500].forEach(delay=>setTimeout(send,delay));
+})();
+</script>
 </body>
 </html>
