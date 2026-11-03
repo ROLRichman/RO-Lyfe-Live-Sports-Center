@@ -211,3 +211,14 @@ test('RTIC Indicator Lab expander is visibly highlighted and its advanced panels
   await expect(page.locator('#rticAdvancedOscSettings > summary')).toContainText('Advanced MACD / Stochastic settings');
   await expect(page.locator('#rticProviderDetails > summary')).toContainText('Provider configuration status');
 });
+
+test('shared five-language translator is available on the embedded market lab', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?embed=market-lab');
+  const translator = page.locator('#rol-network-translator');
+  await expect(translator).toBeVisible();
+  await translator.locator('summary').click();
+  await expect(translator.locator('#rolTranslateNetworkLanguage option')).toHaveCount(5);
+  await translator.locator('#rolTranslateNetworkLanguage').selectOption('Haitian Creole');
+  await expect(translator.locator('summary')).toContainText('Kreyòl Ayisyen');
+});
