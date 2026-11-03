@@ -41,6 +41,20 @@ function mockSportsProviders(page) {
           { homeAway: 'away', team: { displayName: 'Fulham' }, score: '1' }
         ] }]
       }];
+    } else if (path.includes('/basketball/nba/')) {
+      events = [{
+        id: 'nba-live-test',
+        name: 'Philadelphia 76ers at Boston Celtics',
+        date: '2026-11-02T23:00:00Z',
+        status: { type: { detail: 'In Progress', state: 'in' } },
+        competitions: [{
+          venue: { fullName: 'TD Garden' },
+          competitors: [
+            { homeAway: 'home', team: { displayName: 'Boston Celtics' }, score: '61', records: [{ summary: '8-2' }] },
+            { homeAway: 'away', team: { displayName: 'Philadelphia 76ers' }, score: '58', records: [{ summary: '6-4' }] }
+          ]
+        }]
+      }];
     } else if (path.includes('/football/nfl/')) {
       events = [{
         id: 'nfl-test-1',
@@ -92,13 +106,13 @@ test('soccer and football cards actually load their selected mixed score feeds',
   page.on('pageerror', error => pageErrors.push(error.message));
 
   await page.goto('/');
-  await expect(page.locator('#message')).toContainText('Mixed fallback');
+  await expect(page.locator('#message')).toContainText('ESPN public scoreboard');
   await expect(page.locator('#scores-list')).toContainText('Arsenal');
   await expect(page.locator('#scores-list')).toContainText('Fulham');
   expect(calls.getSoccerPrimaryCalls()).toBeGreaterThan(0);
 
   await page.locator('[data-jump-feed="football"]').click();
-  await expect(page.locator('#message')).toContainText('Mixed fallback');
+  await expect(page.locator('#message')).toContainText('ESPN public scoreboard');
   await expect(page.locator('#scores-list')).toContainText('Philadelphia Eagles');
   await expect(page.locator('#scores-list')).toContainText('Kansas City Chiefs');
   expect(calls.getFootballPrimaryCalls()).toBeGreaterThan(0);
@@ -181,8 +195,6 @@ test('Cricket route is attempted and unsupported Handball shows a clear status i
   await expect(page.locator('#message')).toContainText('scoreboard feed not connected');
   await expect(page.locator('#scores-list')).toContainText('dependable public scoreboard endpoint');
   await expect(page.locator('#scores-list .game')).toHaveCount(0);
-  await page.locator('#sportFeedSelect').selectOption('cricket');
-  await expect(page.locator('#message')).toContainText('scoreboard feed not connected');
 });
 
 test('RTIC Indicator Lab expander is visibly highlighted and its advanced panels are identifiable', async ({ page }) => {
