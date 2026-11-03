@@ -60,6 +60,26 @@ function mockSportsProviders(page) {
     });
   });
 
+  page.route('**/apis/site/v2/sports/basketball/nba/summary**', async route => {
+    await route.fulfill({
+      status: 200,
+      headers: { 'access-control-allow-origin': '*' },
+      contentType: 'application/json',
+      body: JSON.stringify({
+        header: { competitions: [{ venue: { fullName: 'TD Garden' }, competitors: [
+          { team: { displayName: 'Boston Celtics' }, records: [{ summary: '8-2' }] },
+          { team: { displayName: 'Philadelphia 76ers' }, records: [{ summary: '6-4' }] }
+        ] }] },
+        gameInfo: { venue: { fullName: 'TD Garden' }, attendance: 19156, gameNote: 'Regular season matchup' },
+        boxscore: { teams: [
+          { team: { displayName: 'Boston Celtics' }, statistics: [{ label: 'Points', displayValue: '61' }, { label: 'Rebounds', displayValue: '24' }] },
+          { team: { displayName: 'Philadelphia 76ers' }, statistics: [{ label: 'Points', displayValue: '58' }, { label: 'Rebounds', displayValue: '21' }] }
+        ] },
+        leaders: [{ displayName: 'Points', leaders: [{ athlete: { displayName: 'Jayson Tatum' }, displayValue: '18' }] }]
+      })
+    });
+  });
+
   return {
     getSoccerPrimaryCalls: () => soccerPrimaryCalls,
     getFootballPrimaryCalls: () => footballPrimaryCalls

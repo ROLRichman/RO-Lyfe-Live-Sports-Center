@@ -1,18 +1,3 @@
-## November 2, 2026 — all-sports scoreboard and scanner-directory expansion
-
-- Added an all-sports selector for Soccer, Basketball, American Football, Baseball, Hockey, Tennis, Golf, Cricket, Formula 1, MMA, Rugby, Volleyball, Handball, Australian Football and More Leagues. Existing soccer/football quick controls and official sport links remain.
-- Soccer and American Football retain the existing secured API-Sports primary route and ESPN public-scoreboard fallback. Other configured competitions use the ESPN public scoreboard endpoints directly. These endpoints are public but undocumented and can change; coverage and browser access are not guaranteed.
-- Cricket and Handball intentionally remain official-link-only until dependable scoreboard routes can be verified. The scoreboard clearly reports this rather than inserting sample matches.
-- Added team records, venue/event context and an expandable Stats & Match History area. ESPN match summary is requested only when a user opens a card; only provider-returned statistics, leaders and records are shown. A missing stat remains unavailable, not estimated.
-- Added a subtle live pulse on in-progress events, with reduced-motion support.
-- Made the Full RTIC Indicator Lab summary, waiting state, MACD/Stochastic visual panels, advanced settings and provider configuration expander more prominent and easier to open on mobile.
-- Added a Scanner Desk menu linking to the existing Tactical RTIC scanner, Live Desk Watchlist Scanner, the embedded Sector Scanner & Chart Lab, Market Terminal and Trading Calculator Pro status page. This is navigation only; scanner engines are not duplicated.
-- This branch preserves the Sports Center's existing sports resources, legal/broadcast notice, user-owned project links, Market Lab sector universe, 14-indicator engine, classroom embed and YouTube destination.
-
-**Implementation branch:** `feature/all-sports-scoreboard-stats-scanner-menu`. The work is pending browser CI and visual/provider validation; do not call external live feeds operational until a real browser can retrieve them. The previous PR #1 was merged on 2026-11-02; the prior handoff's "still open/not deployed" wording is obsolete.
-
----
-
 # RO’Lyfe Live Sports Center™ — Project Handoff
 
 **Repository:** [ROLRichman/RO-Lyfe-Live-Sports-Center](https://github.com/ROLRichman/RO-Lyfe-Live-Sports-Center)  
@@ -78,7 +63,7 @@ Pull request: [#1 — Fix mixed soccer and football feeds and responsive embed v
 - The **Sports Center browser tests** workflow run [#10](https://github.com/ROLRichman/RO-Lyfe-Live-Sports-Center/actions/runs/41540162912) completed successfully on branch head `ef1f0300f1e10749f78ae599f50bce69de2005b2`.
 - The run verified card-triggered feed loading, primary-failure fallback normalization, Market Lab embed visibility/mobile width, Classroom embed width and the YouTube destination.
 - A first CI attempt failed before browser tests because `ubuntu-latest` had advanced to Ubuntu 26.04, unsupported by pinned Playwright 1.56.1; the workflow now uses Ubuntu 24.04. A preceding run also identified the missing npm lockfile/cache config; cache was removed.
-- The test mocks exercise the fallback logic but do not prove live ESPN browser/CORS responses or provider coverage. PR #1 was merged on 2026-11-02. Its CI run #10 passed using mocked score providers; actual ESPN endpoint/CORS behavior remains subject to live verification.
+- The test mocks exercise the fallback logic but do not prove live ESPN browser/CORS responses or provider coverage. The pull request is still open and not deployed.
 
 ## 4. Preserve
 
@@ -91,11 +76,11 @@ Do not remove or replace existing:
 
 ## 5. Next actions
 
-1. Run the extended desktop/mobile browser suite on `feature/all-sports-scoreboard-stats-scanner-menu`.
-2. Test real ESPN scoreboard and summary endpoints in a browser for each mapped sport; keep a sport marked unavailable when the endpoint fails or is not verifiable.
-3. Check all 15 sport selections, the live pulse/reduced-motion behavior, per-match stats expander and RTIC Indicator Lab visibility on mobile.
-4. Confirm Scanner Desk links reach the intended existing engines and preserve all user project links.
-5. Review and merge the new pull request only after tests pass and the user authorizes it.
+1. Review pull request from `feature/sports-mixed-feed-embed-fix` to `main`.
+2. Confirm Sports Center browser workflow is green.
+3. Verify primary/fallback score loading in a real browser and check actual feed coverage.
+4. Review the scanner-only embed inside the Live Desk and the wider Classroom embed on mobile and desktop.
+5. Merge only after the review/CI checks pass and the user authorizes it.
 6. Confirm GitHub Pages deployment after merge.
 
 ## 6. Useful links
