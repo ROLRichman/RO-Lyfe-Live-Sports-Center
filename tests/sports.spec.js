@@ -41,6 +41,20 @@ function mockSportsProviders(page) {
           { homeAway: 'away', team: { displayName: 'Fulham' }, score: '1' }
         ] }]
       }];
+    } else if (path.includes('/basketball/nba/')) {
+      events = [{
+        id: 'nba-live-test',
+        name: 'Philadelphia 76ers at Boston Celtics',
+        date: '2026-11-02T23:00:00Z',
+        status: { type: { detail: 'In Progress', state: 'in' } },
+        competitions: [{
+          venue: { fullName: 'TD Garden' },
+          competitors: [
+            { homeAway: 'home', team: { displayName: 'Boston Celtics' }, score: '61', records: [{ summary: '8-2' }] },
+            { homeAway: 'away', team: { displayName: 'Philadelphia 76ers' }, score: '58', records: [{ summary: '6-4' }] }
+          ]
+        }]
+      }];
     } else if (path.includes('/football/nfl/')) {
       events = [{
         id: 'nfl-test-1',
@@ -60,6 +74,26 @@ function mockSportsProviders(page) {
     });
   });
 
+  page.route('**/apis/site/v2/sports/basketball/nba/summary**', async route => {
+    await route.fulfill({
+      status: 200,
+      headers: { 'access-control-allow-origin': '*' },
+      contentType: 'application/json',
+      body: JSON.stringify({
+        header: { competitions: [{ venue: { fullName: 'TD Garden' }, competitors: [
+          { team: { displayName: 'Boston Celtics' }, records: [{ summary: '8-2' }] },
+          { team: { displayName: 'Philadelphia 76ers' }, records: [{ summary: '6-4' }] }
+        ] }] },
+        gameInfo: { venue: { fullName: 'TD Garden' }, attendance: 19156, gameNote: 'Regular season matchup' },
+        boxscore: { teams: [
+          { team: { displayName: 'Boston Celtics' }, statistics: [{ label: 'Points', displayValue: '61' }, { label: 'Rebounds', displayValue: '24' }] },
+          { team: { displayName: 'Philadelphia 76ers' }, statistics: [{ label: 'Points', displayValue: '58' }, { label: 'Rebounds', displayValue: '21' }] }
+        ] },
+        leaders: [{ displayName: 'Points', leaders: [{ athlete: { displayName: 'Jayson Tatum' }, displayValue: '18' }] }]
+      })
+    });
+  });
+
   return {
     getSoccerPrimaryCalls: () => soccerPrimaryCalls,
     getFootballPrimaryCalls: () => footballPrimaryCalls
@@ -72,13 +106,13 @@ test('soccer and football cards actually load their selected mixed score feeds',
   page.on('pageerror', error => pageErrors.push(error.message));
 
   await page.goto('/');
-  await expect(page.locator('#message')).toContainText('Mixed fallback');
+  await expect(page.locator('#message')).toContainText('ESPN public scoreboard');
   await expect(page.locator('#scores-list')).toContainText('Arsenal');
   await expect(page.locator('#scores-list')).toContainText('Fulham');
   expect(calls.getSoccerPrimaryCalls()).toBeGreaterThan(0);
 
   await page.locator('[data-jump-feed="football"]').click();
-  await expect(page.locator('#message')).toContainText('Mixed fallback');
+  await expect(page.locator('#message')).toContainText('ESPN public scoreboard');
   await expect(page.locator('#scores-list')).toContainText('Philadelphia Eagles');
   await expect(page.locator('#scores-list')).toContainText('Kansas City Chiefs');
   expect(calls.getFootballPrimaryCalls()).toBeGreaterThan(0);
@@ -126,4 +160,54 @@ test('Sports News YouTube resource opens a sports-specific destination', async (
   await page.goto('/');
   const youtube = page.getByRole('link', { name: /YouTube · Sports Highlights/ });
   await expect(youtube).toHaveAttribute('href', /youtube\.com\/results\?search_query=official\+sports\+highlights/);
+});
+
+test('all sport categories offer scoreboard selection and NBA opens real-feed stats/history panel', async ({ page }) => {
+  mockSportsProviders(page);
+  await page.goto('/');
+  const options = await page.locator('#sportFeedSelect option').evaluateAll(nodes => nodes.map(node => node.value));
+  expect(options).toEqual(['soccer','basketball','football','baseball','hockey','tennis','golf','cricket','f1','mma','rugby','volleyball','handball','afl','more']);
+  await page.locator('#sportFeedSelect').selectOption('basketball');
+  await expect(page.locator('#message')).toContainText('ESPN public scoreboard');
+  await expect(page.locator('#scores-list')).toContainText('Boston Celtics');
+  await expect(page.locator('#scores-list')).toContainText('Philadelphia 76ers');
+  await expect(page.locator('#scores-list .game')).toHaveClass(/is-live/);
+  await expect(page.locator('#scores-list .live-dot')).toBeVisible();
+  await expect(page.locator('#scores-list')).toContainText('8-2');
+  await expect(page.locator('#scores-list')).toContainText('TD Garden');
+  const details = page.locator('#scores-list .game-details').first();
+  await expect(details.locator('summary')).toContainText('Stats & Match History');
+  await details.locator('summary').click();
+  await expect(details).toHaveJSProperty('open', true);
+  await expect(details).toContainText('Points');
+  await expect(details).toContainText('Rebounds');
+});
+
+test('Cricket route is attempted and unsupported Handball shows a clear status instead of fake fixtures', async ({ page }) => {
+  mockSportsProviders(page);
+  await page.goto('/');
+  const cricketRequest = page.waitForRequest(request => request.url().includes('/cricket/8048/scoreboard'));
+  await page.locator('#sportFeedSelect').selectOption('cricket');
+  await cricketRequest;
+  await expect(page.locator('#scores-list .game')).toHaveCount(0);
+  await expect(page.locator('#message')).toContainText('No games returned');
+  await page.locator('#sportFeedSelect').selectOption('handball');
+  await expect(page.locator('#message')).toContainText('scoreboard feed not connected');
+  await expect(page.locator('#scores-list')).toContainText('dependable public scoreboard endpoint');
+  await expect(page.locator('#scores-list .game')).toHaveCount(0);
+});
+
+test('RTIC Indicator Lab expander is visibly highlighted and its advanced panels are identifiable', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?embed=market-lab');
+  await expect(page.locator('#market-indicator-details > summary')).toContainText('FULL RTIC INDICATOR LAB');
+  await expect(page.locator('#market-indicator-details > summary')).toContainText('14 visual panels');
+  await expect(page.locator('#market-indicator-details > summary .indicator-lab-open')).toBeVisible();
+  await page.locator('#market-indicator-details > summary').click();
+  await expect(page.locator('#rticDataStatus')).toContainText('NO PROVIDER SCAN LOADED YET');
+  await expect(page.locator('#rticScanOutput')).toContainText('Pick a result row');
+  await expect(page.locator('#rticMacdReadout')).toContainText('Waiting for returned historical bars');
+  await expect(page.locator('#rticStochReadout')).toContainText('Waiting for returned historical bars');
+  await expect(page.locator('#rticAdvancedOscSettings > summary')).toContainText('Advanced MACD / Stochastic settings');
+  await expect(page.locator('#rticProviderDetails > summary')).toContainText('Provider configuration status');
 });

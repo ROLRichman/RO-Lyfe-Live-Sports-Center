@@ -9,6 +9,70 @@
 <style>
 :root{color-scheme:dark;--bg:#07111f;--panel:#0d1b2c;--panel2:#10243a;--line:#1e3850;--text:#eef7ff;--muted:#9db2c7;--cyan:#4de1e6;--green:#7cf5b2;--gold:#ffad66;--orange:#ff8b3d;--red:#ff7b86}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 88% 4%,rgba(255,139,61,.10) 0,transparent 25%),radial-gradient(ellipse at top right,#10334a 0,transparent 40%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(1180px,100% - 28px);margin:auto}.topbar{position:sticky;top:0;z-index:5;background:#07111feF;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:900;letter-spacing:.03em}.brand small{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.17em}.navlinks{display:flex;gap:16px;flex-wrap:wrap;font-size:.9rem}.hero{padding:54px 0 28px}.eyebrow{color:var(--green);font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.hero h1{font-size:clamp(2.1rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.045em;margin:12px 0}.hero h1 span{color:var(--cyan);text-shadow:0 0 18px rgba(255,139,61,.14)}.hero p{max-width:680px;color:var(--muted);font-size:1.05rem}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn,button,select,input{font:inherit}.btn,button{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel2);color:var(--text);font-weight:700}.btn.primary,button.primary{background:linear-gradient(135deg,#ffb06b,#ff8b3d);color:#201006;border-color:#ff9a50;box-shadow:0 0 16px rgba(255,139,61,.12)}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:3px}.statusgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 34px}.stat,.panel,.sportcard{background:linear-gradient(145deg,#10243a,#0a1727);border:1px solid var(--line);border-radius:18px;padding:18px}.stat b{display:block;font-size:1.05rem}.stat span{font-size:.83rem;color:var(--muted)}section{padding:22px 0 34px}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}.sectionhead h2{margin:0;font-size:clamp(1.4rem,3vw,2rem)}.sectionhead p{margin:4px 0 0;color:var(--muted)}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar button.active{border-color:var(--orange);color:#ffc18e;box-shadow:inset 0 0 0 1px rgba(255,139,61,.35),0 0 14px rgba(255,139,61,.10)}.controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.controls select,.controls input{background:#071522;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px;min-width:140px}.scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.game{background:linear-gradient(145deg,rgba(255,139,61,.035),var(--panel) 42%);border:1px solid var(--line);border-radius:16px;padding:16px;min-width:0}.gamehead{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.78rem;margin-bottom:12px}.live{color:var(--green);font-weight:800}.teams{display:grid;gap:10px}.team{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:750}.score{font-size:1.35rem;font-variant-numeric:tabular-nums}.gamefoot{border-top:1px solid var(--line);margin-top:12px;padding-top:10px;color:var(--muted);font-size:.8rem}.empty{grid-column:1/-1;text-align:center;padding:30px 18px;color:var(--muted);border:1px dashed var(--line);border-radius:16px}.sportsgrid,.resourcegrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.sportcard{display:flex;flex-direction:column;gap:8px}.sporticon{font-size:1.7rem}.sportcard h3{margin:0}.sportcard p{margin:0;color:var(--muted);font-size:.9rem}.sportcard a{margin-top:auto;font-weight:750}.resourcegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.resource{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);padding:16px;border-radius:14px}.resource .sporticon{font-size:1.4rem}.resource p{margin:3px 0 0;color:var(--muted);font-size:.88rem}.notice{border-left:3px solid var(--gold);padding:12px 14px;background:#2a2418;color:#f9e8c7;border-radius:0 10px 10px 0;font-size:.88rem}.footer{border-top:1px solid var(--line);margin-top:28px;padding:28px 0 44px;color:var(--muted);font-size:.85rem}.small{font-size:.82rem;color:var(--muted)}#message{color:var(--muted);font-size:.88rem;min-height:1.5em}
+
+/* Additive all-sports scoreboard, provider-backed match detail and calm live pulse */
+.score-feed-choices{display:flex;align-items:end;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.sport-feed-picker{display:grid;gap:5px;color:var(--muted);font-size:.73rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.sport-feed-picker select{min-width:190px;max-width:100%;padding:10px 12px;border:1px solid rgba(77,225,230,.42);border-radius:11px;background:#071522;color:var(--text);font-weight:750}
+.live{display:inline-flex;align-items:center;gap:7px;color:var(--green);font-weight:900}
+.live-dot{display:inline-block;width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(124,245,178,.55);animation:rolLivePulse 1.8s ease-out infinite}
+.game.is-live{border-color:rgba(124,245,178,.45);box-shadow:0 0 0 1px rgba(124,245,178,.08),0 0 20px rgba(124,245,178,.055)}
+.game-description{color:#d6e6f1;font-size:.82rem;margin:10px 0 0}
+.record{color:var(--muted);font-size:.74rem;font-weight:650}
+.game-details{margin-top:12px;border-top:1px solid var(--line);padding-top:9px}
+.game-details>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;color:var(--cyan);font-size:.83rem;font-weight:850}
+.game-details>summary::-webkit-details-marker{display:none}
+.game-details>summary:after{content:"＋";color:var(--gold);font-size:1.05rem}
+.game-details[open]>summary:after{content:"−"}
+.game-details>summary span{color:var(--muted);font-size:.7rem;font-weight:600}
+.game-details-body{padding:10px 0 2px;color:var(--text);font-size:.82rem}
+.summary-stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}
+.summary-team,.summary-leader,.summary-records{min-width:0;padding:10px;border:1px solid var(--line);border-radius:10px;background:#071522}
+.summary-team h4{margin:0 0 7px;color:var(--cyan);font-size:.82rem}
+.summary-team ul,.summary-leader ul{list-style:none;margin:0;padding:0}
+.summary-team li{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid rgba(30,56,80,.6)}
+.summary-team li:last-child{border:0}
+.summary-team li span{color:var(--muted)}
+.summary-team li strong{font-variant-numeric:tabular-nums}
+.summary-leaders{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.summary-leader b,.summary-records b{color:var(--gold);font-size:.78rem}
+.summary-leader li{padding:3px 0;color:var(--muted)}
+.summary-records p,.summary-description{margin:6px 0 0;color:var(--muted);font-size:.8rem}
+.rol-scanner-directory{position:relative}
+.rol-scanner-directory>summary{cursor:pointer;list-style:none;padding:6px 9px;border:1px solid var(--line);border-radius:9px;color:var(--cyan);font-weight:850}
+.rol-scanner-directory>summary::-webkit-details-marker{display:none}
+.rol-scanner-directory>summary:after{content:"⌄";margin-left:6px;color:var(--gold)}
+.rol-scanner-directory[open]>summary:after{content:"⌃"}
+.rol-scanner-directory-links{position:absolute;right:0;top:calc(100% + 7px);z-index:20;display:grid;gap:6px;width:min(290px,calc(100vw - 26px));padding:10px;border:1px solid var(--line);border-radius:12px;background:#071522;box-shadow:0 12px 32px #0009}
+.rol-scanner-directory-links a{padding:8px 9px;border:1px solid rgba(77,225,230,.13);border-radius:8px;color:var(--text);font-size:.8rem}
+.rol-scanner-directory-links a:hover{border-color:var(--cyan);text-decoration:none}
+#market-indicator-details{margin-top:15px;border-color:rgba(255,173,102,.62);box-shadow:0 0 0 1px rgba(255,173,102,.1),0 8px 25px rgba(0,0,0,.22)}
+#market-indicator-details>.indicator-lab-summary{display:flex;justify-content:space-between;align-items:center;gap:12px;list-style:none;padding:15px 16px;background:linear-gradient(105deg,rgba(255,173,102,.20),rgba(77,225,230,.13),rgba(16,36,58,.95));color:#fff1df;border:1px solid rgba(255,173,102,.48);font-size:1rem;font-weight:900;cursor:pointer}
+#market-indicator-details>.indicator-lab-summary::-webkit-details-marker{display:none}
+.indicator-lab-summary:after{content:"⌄";color:#ffd3a8;font-size:1.35rem;font-weight:950}
+#market-indicator-details[open]>.indicator-lab-summary:after{content:"⌃"}
+.indicator-lab-summary-main{display:flex;align-items:center;gap:11px;min-width:0}
+.indicator-lab-summary-main>span:last-child{display:grid;gap:4px}
+.indicator-lab-summary-main strong{letter-spacing:.04em;color:#fff}
+.indicator-lab-summary-main small{color:#d4e5f4;font-size:.76rem;font-weight:650}
+.indicator-lab-arrow{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border-radius:10px;background:#ffad66;color:#251507;font-size:1.35rem;font-weight:950;box-shadow:0 0 18px rgba(255,173,102,.3)}
+.indicator-lab-open{padding:7px 10px;border-radius:8px;background:#ffad66;color:#201006;font-size:.7rem;letter-spacing:.04em;white-space:nowrap}
+#rticDataStatus{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;border-left:4px solid var(--gold);font-weight:850}
+#rticDataStatus strong{color:#ffd3a8}
+#rticDataStatus span{color:var(--muted);font-weight:600}
+.indicator-lab-empty{display:grid;gap:6px;text-align:left;border-style:solid;border-color:rgba(77,225,230,.25)}
+.indicator-lab-empty strong{color:var(--cyan);letter-spacing:.06em}
+.indicator-lab-empty span{color:var(--muted)}
+.market-oscillator h3{color:#ffc18e;font-weight:900}
+.market-oscillator .market-state-badge{margin-top:6px}
+.indicator-subpanel{margin-top:10px;border:1px solid rgba(77,225,230,.28);border-radius:11px;overflow:hidden}
+.indicator-subpanel>summary{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;background:rgba(77,225,230,.06);color:#d8fbff;font-weight:850;cursor:pointer;list-style:none}
+.indicator-subpanel>summary::-webkit-details-marker{display:none}
+.indicator-subpanel>summary b{font-size:.67rem;color:var(--gold);white-space:nowrap}
+@keyframes rolLivePulse{0%{box-shadow:0 0 0 0 rgba(124,245,178,.55);opacity:1}65%{box-shadow:0 0 0 8px rgba(124,245,178,0);opacity:.78}100%{box-shadow:0 0 0 0 rgba(124,245,178,0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.live-dot{animation:none;box-shadow:0 0 0 2px rgba(124,245,178,.18)}}
+@media(max-width:700px){.score-feed-choices{width:100%;justify-content:flex-start}.sport-feed-picker{width:100%}.sport-feed-picker select{width:100%}.summary-stats-grid,.summary-leaders{grid-template-columns:1fr}.rol-scanner-directory-links{right:auto;left:0}.indicator-lab-open{font-size:.63rem;padding:6px 7px}.indicator-lab-summary-main small{font-size:.68rem}}
+
 @media(max-width:700px){.nav{align-items:flex-start;padding:12px 0;flex-direction:column}.navlinks{gap:12px}.hero{padding-top:36px}.statusgrid{grid-template-columns:1fr}.scores,.sportsgrid,.resourcegrid{grid-template-columns:1fr}.stat{padding:14px}.wrap{width:min(100% - 20px,1180px)}}
 
 /* RO'Lyfe Tactical Market Lab — reuse the existing RTIC engine */
@@ -109,7 +173,7 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
 <script>
 (function(){const mode=new URLSearchParams(location.search).get('embed');if(mode==='classroom')document.documentElement.classList.add('classroom-embed');if(mode==='market-lab'){document.documentElement.classList.add('market-lab-embed');document.addEventListener('DOMContentLoaded',()=>{const panel=document.getElementById('market-lab-panel');if(panel)panel.open=true;});}})();
 </script>
-<header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="RO’Lyfe Live Sports Center home">RO’LYFE <span style="color:var(--cyan)">LIVE SPORTS CENTER™</span><small>ALL SPORTS. ONE COMMAND CENTER.</small></a><nav class="navlinks" aria-label="Main navigation"><a href="#scores">Scores</a><a href="#sports">Sports</a><a href="#news">News & Talk</a><a href="#watch">Where to Watch</a></nav></div></header>
+<header class="topbar"><div class="wrap nav"><a class="brand" href="#top" aria-label="RO’Lyfe Live Sports Center home">RO’LYFE <span style="color:var(--cyan)">LIVE SPORTS CENTER™</span><small>ALL SPORTS. ONE COMMAND CENTER.</small></a><nav class="navlinks" aria-label="Main navigation"><a href="#scores">Scores</a><a href="#sports">Sports</a><a href="#news">News & Talk</a><a href="#watch">Where to Watch</a><details class="rol-scanner-directory"><summary>🔎 Scanner Desk ▾</summary><div class="rol-scanner-directory-links"><a href="https://rolrichman.github.io/RO-Lyfe-Tactical-Intelligence-Center-/rtic-scanner.js/" target="_blank" rel="noopener">Tactical RTIC Live Scanner ↗</a><a href="https://rolrichman.github.io/RO-Lyfe-Trading-Intelligence-Classroom/live-chart-desk/#symbol-scanner" target="_blank" rel="noopener">Live Desk Watchlist Scanner ↗</a><a href="?embed=market-lab" target="_blank" rel="noopener">Sector Scanner &amp; Chart Lab ↗</a><a href="https://rolrichman.github.io/rolyfe-market-terminal/" target="_blank" rel="noopener">Market Terminal Scanner ↗</a><a href="https://rolrichman.github.io/ROlyfe-Trading-Calculator-Pro/" target="_blank" rel="noopener">Trading Calculator Pro · module status ↗</a></div></details></nav></div></header>
 <button class="rol-workspace-toggle" id="rol-workspace-toggle" type="button" aria-expanded="false" aria-controls="rol-workspace-panel">RO’LYFE HUB</button>
 <aside class="rol-workspace-panel" id="rol-workspace-panel" aria-label="RO’Lyfe workspace menu">
  <h3>RO’Lyfe Command Hub</h3><p>Move between your connected learning, market, relocation, media and game workspaces.</p>
@@ -147,24 +211,24 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
 <main id="top" class="wrap">
 <section class="hero"><div class="eyebrow">Independent sports intelligence hub</div><h1>Follow the action.<br><span>Find your game.</span></h1><p>A mobile-first command center for scores, schedules, matchups, sports stories, podcasts, and official viewing resources. Built for every fan—not just one team.</p><div class="actions"><a class="btn primary" href="#scores">Open Scoreboard ↓</a><a class="btn" href="#sports">Explore All Sports</a></div>
 <div class="statusgrid"><div class="stat"><b>15 sports categories</b><span>A growing home for fans across leagues</span></div><div class="stat"><b>Scoreboard + schedules</b><span>Connected feeds for selected competitions</span></div><div class="stat"><b>Official viewing links</b><span>Find authorized broadcasters and services</span></div></div></section>
-<section id="scores"><div class="sectionhead"><div><div class="eyebrow">Game day console</div><h2>Live Scores & Fixtures</h2><p>Choose a connected feed and check today's matchups.</p></div><div class="toolbar" role="group" aria-label="Score feed"><button class="active" data-feed="soccer">⚽ Soccer</button><button data-feed="football">🏈 American Football</button></div></div>
-<div class="resourcegrid" style="margin:14px 0 18px"><div class="resource"><div class="sporticon">🌍</div><div><b><a href="https://www.fifa.com/" target="_blank" rel="noopener">FIFA · International</a></b><p>National teams and global tournaments.</p></div></div><div class="resource"><div class="sporticon">🏆</div><div><b><a href="https://www.uefa.com/" target="_blank" rel="noopener">UEFA · European competitions</a></b><p>Champions League and European match coverage.</p></div></div><div class="resource"><div class="sporticon">⚽</div><div><b><a href="https://www.premierleague.com/" target="_blank" rel="noopener">Premier League</a></b><p>Fixtures, results, tables and club news.</p></div></div></div><div class="controls"><select id="mode" aria-label="Scoreboard mode"><option value="live">Live games</option><option value="schedule">Schedule by date</option></select><input id="date" type="date" aria-label="Schedule date"><button id="refresh" class="primary">Refresh scores</button></div><div id="message" role="status" aria-live="polite">Ready to load the selected sports feed.</div><div id="scores-list" class="scores"><div class="empty">Connecting to the selected match feed…</div></div><div class="score-fallback-links" aria-label="Official scoreboard alternatives"><a href="https://www.espn.com/soccer/scoreboard" target="_blank" rel="noopener">ESPN Soccer fixtures ↗</a><a href="https://www.espn.com/nfl/scoreboard" target="_blank" rel="noopener">ESPN NFL scoreboard ↗</a><a href="https://www.fifa.com/" target="_blank" rel="noopener">FIFA ↗</a><a href="https://www.uefa.com/" target="_blank" rel="noopener">UEFA ↗</a></div><p class="small">Mixed feed: the secured API-Sports connection is tried first, with an ESPN public scoreboard fallback when that provider is unavailable. The ESPN JSON endpoints are public but undocumented and can change. Coverage is limited to the listed fallback competitions; provider timing and completeness can vary.</p></section>
+<section id="scores"><div class="sectionhead"><div><div class="eyebrow">Game day console</div><h2>Live Scores & Fixtures</h2><p>Choose a connected feed and check today's matchups.</p></div><div class="score-feed-choices"><div class="toolbar" role="group" aria-label="Quick score feeds"><button class="active" data-feed="soccer">⚽ Soccer</button><button data-feed="football">🏈 American Football</button></div><label class="sport-feed-picker" for="sportFeedSelect">All sports scoreboard<select id="sportFeedSelect" aria-label="Choose a sport scoreboard"><option value="soccer">⚽ Soccer</option><option value="basketball">🏀 Basketball</option><option value="football">🏈 American Football</option><option value="baseball">⚾ Baseball</option><option value="hockey">🏒 Hockey</option><option value="tennis">🎾 Tennis</option><option value="golf">⛳ Golf</option><option value="cricket">🏏 Cricket</option><option value="f1">🏎️ Formula 1</option><option value="mma">🥊 MMA</option><option value="rugby">🏉 Rugby</option><option value="volleyball">🏐 Volleyball</option><option value="handball">🤾 Handball</option><option value="afl">🏉 Australian Football</option><option value="more">🏆 More Leagues</option></select></label></div></div>
+<div class="resourcegrid" style="margin:14px 0 18px"><div class="resource"><div class="sporticon">🌍</div><div><b><a href="https://www.fifa.com/" target="_blank" rel="noopener">FIFA · International</a></b><p>National teams and global tournaments.</p></div></div><div class="resource"><div class="sporticon">🏆</div><div><b><a href="https://www.uefa.com/" target="_blank" rel="noopener">UEFA · European competitions</a></b><p>Champions League and European match coverage.</p></div></div><div class="resource"><div class="sporticon">⚽</div><div><b><a href="https://www.premierleague.com/" target="_blank" rel="noopener">Premier League</a></b><p>Fixtures, results, tables and club news.</p></div></div></div><div class="controls"><select id="mode" aria-label="Scoreboard mode"><option value="live">Live games</option><option value="schedule">Schedule by date</option></select><input id="date" type="date" aria-label="Schedule date"><button id="refresh" class="primary">Refresh scores</button></div><div id="message" role="status" aria-live="polite">Ready to load the selected sports feed.</div><div id="scores-list" class="scores"><div class="empty">Connecting to the selected match feed…</div></div><div class="score-fallback-links" aria-label="Official scoreboard alternatives"><a href="https://www.espn.com/soccer/scoreboard" target="_blank" rel="noopener">ESPN Soccer fixtures ↗</a><a href="https://www.espn.com/nfl/scoreboard" target="_blank" rel="noopener">ESPN NFL scoreboard ↗</a><a href="https://www.fifa.com/" target="_blank" rel="noopener">FIFA ↗</a><a href="https://www.uefa.com/" target="_blank" rel="noopener">UEFA ↗</a></div><p class="small">Soccer and American Football try the secured API-Sports connection first. Other connected sports use the public ESPN scoreboard fallback; these endpoints are undocumented and may change, and provider coverage can vary. Cricket tries ESPN’s numeric league route; endpoint behavior is not guaranteed. Handball remains official-link-only until a dependable score feed is verified.</p></section>
 <section id="sports"><div class="sectionhead"><div><div class="eyebrow">Across the sporting world</div><h2>Explore Sports</h2><p>Score integrations expand as data coverage is verified.</p></div></div><div class="sportsgrid">
 <article class="sportcard"><div class="sporticon">⚽</div><h3>Soccer</h3><p>Global leagues, fixtures and matchday coverage.</p><a href="#scores-list" data-jump-feed="soccer">Open soccer scores →</a></article>
-<article class="sportcard"><div class="sporticon">🏀</div><h3>Basketball</h3><p>Professional and international hoops resources.</p><a href="https://www.nba.com/" target="_blank" rel="noopener">NBA official site ↗</a></article>
+<article class="sportcard"><div class="sporticon">🏀</div><h3>Basketball</h3><p>Professional and international hoops resources.</p><a href="https://www.nba.com/" target="_blank" rel="noopener">NBA official site ↗</a><a href="#scores-list" data-jump-feed="basketball">Open basketball scores →</a></article>
 <article class="sportcard"><div class="sporticon">🏈</div><h3>American Football</h3><p>Football fixture feed with league coverage dependent on provider.</p><a href="#scores-list" data-jump-feed="football">Open football scores →</a></article>
-<article class="sportcard"><div class="sporticon">⚾</div><h3>Baseball</h3><p>League news, standings and official resources.</p><a href="https://www.mlb.com/" target="_blank" rel="noopener">MLB official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏒</div><h3>Hockey</h3><p>Scores and stories from the rink.</p><a href="https://www.nhl.com/" target="_blank" rel="noopener">NHL official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🎾</div><h3>Tennis</h3><p>ATP and WTA tours, rankings, draws and match coverage.</p><a href="https://www.atptour.com/" target="_blank" rel="noopener">ATP Tour ↗</a><a href="https://www.wtatennis.com/" target="_blank" rel="noopener">WTA Tour ↗</a></article>
-<article class="sportcard"><div class="sporticon">⛳</div><h3>Golf</h3><p>Tournaments, leaderboards and tour updates.</p><a href="https://www.pgatour.com/" target="_blank" rel="noopener">PGA TOUR ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏏</div><h3>Cricket</h3><p>International cricket and tournament resources.</p><a href="https://www.icc-cricket.com/" target="_blank" rel="noopener">ICC official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏎️</div><h3>Formula 1</h3><p>Race weekends, results and paddock news.</p><a href="https://www.formula1.com/" target="_blank" rel="noopener">Formula 1 official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🥊</div><h3>MMA</h3><p>Fight cards, athlete stories and event information.</p><a href="https://www.ufc.com/" target="_blank" rel="noopener">UFC official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏉</div><h3>Rugby</h3><p>International and club rugby resources.</p><a href="https://www.world.rugby/" target="_blank" rel="noopener">World Rugby ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏐</div><h3>Volleyball</h3><p>Indoor and beach volleyball coverage.</p><a href="https://www.fivb.com/" target="_blank" rel="noopener">Volleyball World ↗</a></article>
-<article class="sportcard"><div class="sporticon">🤾</div><h3>Handball</h3><p>International competition and federation updates.</p><a href="https://www.ihf.info/" target="_blank" rel="noopener">IHF official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏉</div><h3>Australian Football</h3><p>AFL matchday news, fixtures and results.</p><a href="https://www.afl.com.au/" target="_blank" rel="noopener">AFL official site ↗</a></article>
-<article class="sportcard"><div class="sporticon">🏆</div><h3>More Leagues</h3><p>More sports and competitions can be added after verifying data access.</p><a href="https://www.espn.com/" target="_blank" rel="noopener">Explore sports news ↗</a></article>
+<article class="sportcard"><div class="sporticon">⚾</div><h3>Baseball</h3><p>League news, standings and official resources.</p><a href="https://www.mlb.com/" target="_blank" rel="noopener">MLB official site ↗</a><a href="#scores-list" data-jump-feed="baseball">Open baseball scores →</a></article>
+<article class="sportcard"><div class="sporticon">🏒</div><h3>Hockey</h3><p>Scores and stories from the rink.</p><a href="https://www.nhl.com/" target="_blank" rel="noopener">NHL official site ↗</a><a href="#scores-list" data-jump-feed="hockey">Open hockey scores →</a></article>
+<article class="sportcard"><div class="sporticon">🎾</div><h3>Tennis</h3><p>ATP and WTA tours, rankings, draws and match coverage.</p><a href="https://www.atptour.com/" target="_blank" rel="noopener">ATP Tour ↗</a><a href="https://www.wtatennis.com/" target="_blank" rel="noopener">WTA Tour ↗</a><a href="#scores-list" data-jump-feed="tennis">Open tennis scores →</a></article>
+<article class="sportcard"><div class="sporticon">⛳</div><h3>Golf</h3><p>Tournaments, leaderboards and tour updates.</p><a href="https://www.pgatour.com/" target="_blank" rel="noopener">PGA TOUR ↗</a><a href="#scores-list" data-jump-feed="golf">Open golf scores →</a></article>
+<article class="sportcard"><div class="sporticon">🏏</div><h3>Cricket</h3><p>International cricket and tournament resources.</p><a href="https://www.icc-cricket.com/" target="_blank" rel="noopener">ICC official site ↗</a><a href="#scores-list" data-jump-feed="cricket">Open cricket scores →</a></article>
+<article class="sportcard"><div class="sporticon">🏎️</div><h3>Formula 1</h3><p>Race weekends, results and paddock news.</p><a href="https://www.formula1.com/" target="_blank" rel="noopener">Formula 1 official site ↗</a><a href="#scores-list" data-jump-feed="f1">Open Formula 1 scores →</a></article>
+<article class="sportcard"><div class="sporticon">🥊</div><h3>MMA</h3><p>Fight cards, athlete stories and event information.</p><a href="https://www.ufc.com/" target="_blank" rel="noopener">UFC official site ↗</a><a href="#scores-list" data-jump-feed="mma">Open MMA results →</a></article>
+<article class="sportcard"><div class="sporticon">🏉</div><h3>Rugby</h3><p>International and club rugby resources.</p><a href="https://www.world.rugby/" target="_blank" rel="noopener">World Rugby ↗</a><a href="#scores-list" data-jump-feed="rugby">Open rugby scores →</a></article>
+<article class="sportcard"><div class="sporticon">🏐</div><h3>Volleyball</h3><p>Indoor and beach volleyball coverage.</p><a href="https://www.fivb.com/" target="_blank" rel="noopener">Volleyball World ↗</a><a href="#scores-list" data-jump-feed="volleyball">Open volleyball scores →</a></article>
+<article class="sportcard"><div class="sporticon">🤾</div><h3>Handball</h3><p>International competition and federation updates.</p><a href="https://www.ihf.info/" target="_blank" rel="noopener">IHF official site ↗</a><a href="#scores-list" data-jump-feed="handball">Open handball scores →</a></article>
+<article class="sportcard"><div class="sporticon">🏉</div><h3>Australian Football</h3><p>AFL matchday news, fixtures and results.</p><a href="https://www.afl.com.au/" target="_blank" rel="noopener">AFL official site ↗</a><a href="#scores-list" data-jump-feed="afl">Open AFL scores →</a></article>
+<article class="sportcard"><div class="sporticon">🏆</div><h3>More Leagues</h3><p>More sports and competitions can be added after verifying data access.</p><a href="https://www.espn.com/" target="_blank" rel="noopener">Explore sports news ↗</a><a href="#scores-list" data-jump-feed="more">Open more leagues →</a></article>
 </div></section>
 
 <section id="market-lab">
@@ -195,24 +259,24 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
     <div id="market-tradingview-chart" class="market-tradingview-chart"><div class="market-chart-fallback">Open the Market Lab or select a symbol to load the chart.</div></div>
    </div>
    <details class="dropdown-panel" id="market-indicator-details">
-    <summary>Full RTIC Indicator Lab · 14 visual panels + MACD / Stochastic graphs</summary>
+    <summary class="indicator-lab-summary"><span class="indicator-lab-summary-main"><span class="indicator-lab-arrow" aria-hidden="true">⌄</span><span><strong>FULL RTIC INDICATOR LAB</strong><small>14 visual panels + MACD / Stochastic graphs · open this section</small></span></span><span class="indicator-lab-open">OPEN LAB ↗</span></summary>
     <div class="details-body">
-     <div id="rticDataStatus" class="rtic-data-status">No provider scan loaded yet.</div>
+     <div id="rticDataStatus" class="rtic-data-status"><strong>NO PROVIDER SCAN LOADED YET.</strong><span>Choose a result row or use “Analyze selected symbol” to request real historical bars.</span></div>
      <div id="rticQuoteOutput" class="rtic-data-metrics"></div>
-     <div id="rticScanOutput"><div class="empty">Pick a result row or tap “Analyze selected symbol” to pull provider bars and calculate all 14 RTIC indicator panels.</div></div>
+     <div id="rticScanOutput"><div class="empty indicator-lab-empty"><strong>START HERE</strong><span>Pick a result row or tap “Analyze selected symbol” to pull provider bars and calculate all 14 RTIC indicator panels.</span></div></div>
      <div class="market-oscillator-grid">
       <article class="market-oscillator"><h3>MACD · Visual panel</h3><p id="rticMacdReadout">Waiting for returned historical bars.</p><div id="rticMacdPlot" aria-label="RTIC MACD chart"></div><span id="rticMacdBias" class="market-state-badge">WAITING</span></article>
       <article class="market-oscillator"><h3>Stochastic · Visual panel</h3><p id="rticStochReadout">Waiting for returned historical bars.</p><div id="rticStochPlot" aria-label="RTIC Stochastic chart"></div><span id="rticStochBias" class="market-state-badge">WAITING</span></article>
      </div>
      <p id="rticOscSource" class="market-lab-note">Oscillator plots use the returned Tickerbot bars when available. No sample indicator values are inserted.</p>
-     <details class="dropdown-panel"><summary>Advanced MACD / Stochastic settings</summary><div class="details-body">
+     <details class="dropdown-panel indicator-subpanel" id="rticAdvancedOscSettings"><summary><span>⚙ Advanced MACD / Stochastic settings</span><b>OPEN SETTINGS ⌄</b></summary><div class="details-body">
       <div class="market-osc-controls">
        <label>MACD fast EMA<input id="rticMacdFast" type="number" min="2" max="50" value="12"></label><label>MACD slow EMA<input id="rticMacdSlow" type="number" min="3" max="100" value="26"></label><label>MACD signal<input id="rticMacdSignal" type="number" min="2" max="50" value="9"></label><label>Stochastic %K lookback<input id="rticStochPeriod" type="number" min="2" max="50" value="14"></label><label>Stochastic %D smoothing<input id="rticStochSmooth" type="number" min="1" max="20" value="3"></label>
       </div><button type="button" id="market-save-oscillators">Update oscillator plots</button><p class="market-lab-note">Settings are applied by the existing RTIC engine and saved in this browser when local storage is available.</p>
      </div></details>
     </div>
    </details>
-   <details class="dropdown-panel"><summary>Provider configuration status</summary><div class="details-body"><div id="rticProviderStatus" class="rtic-provider-list"><div class="rtic-provider">Tickerbot<strong>Checking server configuration…</strong></div></div><p class="market-lab-note">This status indicates whether a server-side secret is configured; it does not certify exchange-real-time data or guarantee a successful quote. Each scan shows its own result and timestamp.</p></div></details>
+   <details class="dropdown-panel indicator-subpanel" id="rticProviderDetails"><summary><span>◉ Provider configuration status</span><b>VIEW STATUS ⌄</b></summary><div class="details-body"><div id="rticProviderStatus" class="rtic-provider-list"><div class="rtic-provider">Tickerbot<strong>Checking server configuration…</strong></div></div><p class="market-lab-note">This status indicates whether a server-side secret is configured; it does not certify exchange-real-time data or guarantee a successful quote. Each scan shows its own result and timestamp.</p></div></details>
    <div class="engine-hidden" aria-hidden="true">
     <select id="rticDataProvider"><option value="tickerbot" selected>Tickerbot</option><option value="finnhub">Finnhub</option><option value="alphavantage">Alpha Vantage</option><option value="coingecko">CoinGecko</option></select>
     <select id="rticWatchlistPick"></select><input id="rticDataSymbol" value="WMT"><select id="rticDataInterval"><option value="5m">5m</option><option value="15m">15m</option><option value="30m">30m</option><option value="1h">1h</option><option value="2h">2h</option><option value="4h">4h</option><option value="1d">1d</option><option value="1w">1w</option><option value="1mo">1mo</option></select>
@@ -245,96 +309,198 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
 const API_BASE='https://nzduinxmsmmdbonefifi.supabase.co/functions/v1';
 const SUPABASE_ANON_JWT='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56ZHVpbnhtc21tZGJvbmVmaWZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNDI5NjMsImV4cCI6MjEwODgxODk2M30.N-2jV4a6wU9315lkVCvhDn7tJJ4ryzDHBeItSRztEh8';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_lD4rMx8S_OvBRHNWajgQKQ_hYmCjFzY';
+const SPORTS_FEEDS={
+ soccer:{label:'Soccer',leagues:[
+  {path:'soccer/eng.1',name:'Premier League'},{path:'soccer/esp.1',name:'LALIGA'},{path:'soccer/ita.1',name:'Serie A'},{path:'soccer/ger.1',name:'Bundesliga'},{path:'soccer/fra.1',name:'Ligue 1'},{path:'soccer/usa.1',name:'MLS'},{path:'soccer/uefa.champions',name:'UEFA Champions League'},{path:'soccer/uefa.europa',name:'UEFA Europa League'}
+ ]},
+ football:{label:'American Football',leagues:[{path:'football/nfl',name:'NFL'},{path:'football/college-football',name:'College Football'}]},
+ basketball:{label:'Basketball',leagues:[{path:'basketball/nba',name:'NBA'},{path:'basketball/wnba',name:'WNBA'},{path:'basketball/mens-college-basketball',name:'NCAA Basketball'}]},
+ baseball:{label:'Baseball',leagues:[{path:'baseball/mlb',name:'MLB'}]},
+ hockey:{label:'Hockey',leagues:[{path:'hockey/nhl',name:'NHL'}]},
+ tennis:{label:'Tennis',leagues:[{path:'tennis/atp',name:'ATP Tour'},{path:'tennis/wta',name:'WTA Tour'}]},
+ golf:{label:'Golf',leagues:[{path:'golf/pga',name:'PGA TOUR'},{path:'golf/lpga',name:'LPGA'}]},
+ cricket:{label:'Cricket',leagues:[{path:'cricket/8048',name:'Cricket · ESPN numeric league route'}]},
+ f1:{label:'Formula 1',leagues:[{path:'racing/f1',name:'Formula 1'}]},
+ mma:{label:'MMA',leagues:[{path:'mma/ufc',name:'UFC'}]},
+ rugby:{label:'Rugby',leagues:[{path:'rugby/164205',name:'Rugby Union'},{path:'rugby/180659',name:'International Rugby'},{path:'rugby-league/3',name:'Rugby League'}]},
+ volleyball:{label:'Volleyball',leagues:[{path:'volleyball/fivb.m',name:'FIVB Men'},{path:'volleyball/fivb.w',name:'FIVB Women'}]},
+ handball:{label:'Handball',leagues:[],unavailable:'A dependable public scoreboard endpoint is not currently verified for handball. Official IHF resources remain available below.'},
+ afl:{label:'Australian Football',leagues:[{path:'australian-football/afl',name:'AFL'}]},
+ more:{label:'More Leagues',leagues:[
+  {path:'soccer/eng.2',name:'English Championship'},{path:'soccer/ned.1',name:'Eredivisie'},{path:'soccer/por.1',name:'Primeira Liga'},{path:'soccer/uefa.europa.conf',name:'UEFA Conference League'},{path:'racing/nascar-premier',name:'NASCAR'},{path:'racing/irl',name:'IndyCar'}
+ ]}
+};
 let feed='soccer',requestId=0;
-const list=document.getElementById('scores-list'),message=document.getElementById('message'),mode=document.getElementById('mode'),date=document.getElementById('date');
+const list=document.getElementById('scores-list'),message=document.getElementById('message'),mode=document.getElementById('mode'),date=document.getElementById('date'),feedSelect=document.getElementById('sportFeedSelect');
 const today=new Date();date.value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');
 function esc(v){return String(v==null?'—':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function first(o,paths){for(const p of paths){let v=o;for(const k of p.split('.'))v=v&&v[k];if(v!==undefined&&v!==null&&v!=='')return v;}return '—';}
-function render(items){
- if(!Array.isArray(items)||!items.length){list.innerHTML='<div class="empty">No fixtures were returned for this selection. Try a different date, or use the official scoreboard links below.</div>';return;}
- list.innerHTML=items.map(g=>{
-  const home=first(g,['teams.home.name','home.name','home_team.name','teams.home','homeTeam','home']);
-  const away=first(g,['teams.away.name','away.name','away_team.name','teams.away','awayTeam','away']);
-  const hs=first(g,['scores.home.total','scores.home','goals.home','score.home','home_score']);
-  const as=first(g,['scores.away.total','scores.away','goals.away','score.away','away_score']);
-  const status=first(g,['fixture.status.long','status.long','status.description','status','game.status']);
-  const time=first(g,['fixture.date','date','game.date','timestamp']);
-  const league=first(g,['league.name','league','competition.name']);
-  let dt='';if(time!=='—'){const d=new Date(time);if(!isNaN(d))dt=d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
-  return '<article class="game"><div class="gamehead"><span>'+esc(league)+'</span><span class="'+(/live|progress|quarter|half|in play|in progress/i.test(status)?'live':'')+'">'+esc(status)+'</span></div><div class="teams"><div class="team"><span>'+esc(home)+'</span><span class="score">'+esc(hs)+'</span></div><div class="team"><span>'+esc(away)+'</span><span class="score">'+esc(as)+'</span></div></div><div class="gamefoot">'+esc(dt||'Time not provided by feed')+'</div></article>';
- }).join('');
+function asArray(v){return Array.isArray(v)?v:[];}
+function isLiveStatus(status,state){
+ return String(state||'').toLowerCase()==='in'||/live|in progress|in play|halftime|half time|quarter [1-4]|[1-4](st|nd|rd|th) quarter|period [1-3]|overtime|shootout|top of|bottom of|end of inning/i.test(String(status||''));
 }
-function normalizeEspnEvent(event,leagueName){
+function normalizeEspnEvent(event,league){
  const competition=(event.competitions||[])[0]||{},competitors=competition.competitors||[];
  const home=competitors.find(x=>x.homeAway==='home')||competitors[0]||{};
  const away=competitors.find(x=>x.homeAway==='away')||competitors[1]||{};
+ const recordText=x=>{
+  const rec=asArray(x.records)[0]||{};
+  return first(rec,['summary','displayValue','name'])!=='—'?first(rec,['summary','displayValue','name']):first(x,['record','summary']);
+ };
  const status=event.status?.type?.detail||event.status?.type?.shortDetail||event.status?.type?.description||'Scheduled';
- return {id:event.id,home:{name:home.team?.displayName||home.team?.name||home.displayName||'Home'},away:{name:away.team?.displayName||away.team?.name||away.displayName||'Away'},scores:{home:home.score??'—',away:away.score??'—'},fixture:{date:event.date,status:{long:status}},league:{name:leagueName}};
+ return {
+  id:event.id,home:{name:home.team?.displayName||home.team?.name||home.displayName||'Home',record:recordText(home)},
+  away:{name:away.team?.displayName||away.team?.name||away.displayName||'Away',record:recordText(away)},
+  scores:{home:home.score??'—',away:away.score??'—'},
+  fixture:{date:event.date,status:{long:status,state:event.status?.type?.state||''}},
+  league:{name:league.name},description:event.name||event.shortName||event.competitions?.[0]?.notes?.[0]?.headline||'',
+  venue:competition.venue?.fullName||competition.venue?.address?.city||'',
+  source:'ESPN public scoreboard',summaryPath:league.path,live:isLiveStatus(status,event.status?.type?.state)
+ };
 }
-async function espnFallback(){
- const leagues=feed==='football'
-  ?[{path:'football/nfl',name:'NFL'},{path:'football/college-football',name:'College Football'}]
-  :[{path:'soccer/eng.1',name:'Premier League'},{path:'soccer/esp.1',name:'LALIGA'},{path:'soccer/ita.1',name:'Serie A'},{path:'soccer/usa.1',name:'MLS'},{path:'soccer/uefa.champions',name:'UEFA Champions League'}];
- const dateQuery=mode.value==='schedule'?'&dates='+encodeURIComponent(date.value.replace(/-/g,'')):'';
+function normalizePrimaryGame(g){
+ const status=first(g,['fixture.status.long','status.long','status.description','status','game.status']);
+ return {
+  id:first(g,['fixture.id','id','game.id']),home:{name:first(g,['teams.home.name','home.name','home_team.name','teams.home','homeTeam','home']),record:first(g,['teams.home.record','home.record','home_team.record'])},
+  away:{name:first(g,['teams.away.name','away.name','away_team.name','teams.away','awayTeam','away']),record:first(g,['teams.away.record','away.record','away_team.record'])},
+  scores:{home:first(g,['scores.home.total','scores.home','goals.home','score.home','home_score']),away:first(g,['scores.away.total','scores.away','goals.away','score.away','away_score'])},
+  fixture:{date:first(g,['fixture.date','date','game.date','timestamp']),status:{long:status}},
+  league:{name:first(g,['league.name','league','competition.name'])},description:first(g,['fixture.venue.name','venue.name','game.description','description']),
+  venue:first(g,['fixture.venue.name','venue.name']),source:'API-Sports primary feed',live:isLiveStatus(status)
+ };
+}
+function render(items){
+ if(!Array.isArray(items)||!items.length){list.innerHTML='<div class="empty">No fixtures were returned for this selection. Try another date, or use the official scoreboard links below.</div>';return;}
+ list.innerHTML=items.map(g=>{
+  const home=first(g,['home.name']),away=first(g,['away.name']),hs=first(g,['scores.home']),as=first(g,['scores.away']);
+  const status=first(g,['fixture.status.long']),time=first(g,['fixture.date']),league=first(g,['league.name']);
+  const hrec=first(g,['home.record']),arec=first(g,['away.record']),venue=first(g,['venue']),description=first(g,['description']);
+  const live=!!g.live||isLiveStatus(status,g.fixture?.status?.state);
+  let dt='';if(time!=='—'){const d=new Date(time);if(!isNaN(d))dt=d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
+  const summaryPath=g.summaryPath?esc(g.summaryPath):'';
+  const eventId=g.id&&g.id!=='—'?esc(g.id):'';
+  const details=summaryPath&&eventId
+   ?'<details class="game-details" data-event-summary data-summary-path="'+summaryPath+'" data-event-id="'+eventId+'"><summary>📊 Stats &amp; Match History <span>Open match details</span></summary><div class="game-details-body"><p class="small">Open to load the provider’s published box score, available team records and match notes. No statistics are invented.</p></div></details>'
+   :'<details class="game-details"><summary>📊 Stats &amp; Match History <span>Feed details</span></summary><div class="game-details-body"><p class="small">This provider did not return a match-summary endpoint for this fixture. Scores and event status above are the available feed data.</p></div></details>';
+  return '<article class="game'+(live?' is-live':'')+'"><div class="gamehead"><span>'+esc(league)+'</span><span class="'+(live?'live':'')+'">'+(live?'<i class="live-dot" aria-hidden="true"></i> LIVE · ':'')+esc(status)+'</span></div><div class="teams"><div class="team"><span>'+esc(home)+(hrec!=='—'?' <small class="record">('+esc(hrec)+')</small>':'')+'</span><span class="score">'+esc(hs)+'</span></div><div class="team"><span>'+esc(away)+(arec!=='—'?' <small class="record">('+esc(arec)+')</small>':'')+'</span><span class="score">'+esc(as)+'</span></div></div><div class="gamefoot"><span>'+esc(dt||'Time not provided by feed')+'</span>'+(venue!=='—'?' · '+esc(venue):'')+' · '+esc(g.source||'Provider feed')+'</div>'+(description!=='—'?'<p class="game-description">'+esc(description)+'</p>':'')+details+'</article>';
+ }).join('');
+}
+function summaryDetails(summary){
+ const info=summary.gameInfo||{},header=(summary.header?.competitions||[])[0]||{},teams=asArray(summary.boxscore?.teams),leaders=asArray(summary.leaders);
+ const venue=info.venue?.fullName||info.venue?.address?.city||header.venue?.fullName||'';
+ const attendance=info.attendance?Number(info.attendance).toLocaleString():'';
+ const description=info.gameNote||summary.header?.season?.name||summary.header?.competitions?.[0]?.notes?.[0]?.headline||'';
+ const seasonSeries=summary.seasonseries||summary.seasonSeries||summary.headToHead||null;
+ const seasonSeriesText=typeof seasonSeries==='string'?seasonSeries:seasonSeries?.summary||seasonSeries?.description||seasonSeries?.displayName||seasonSeries?.name||asArray(seasonSeries).map(x=>x.summary||x.description||x.displayName||x.name).filter(Boolean).join(' · ');
+ const records=asArray(header.competitors).map(c=>({name:c.team?.displayName||c.team?.name||c.displayName||'Team',record:asArray(c.records)[0]?.summary||''})).filter(x=>x.record);
+ const teamBlocks=teams.map(team=>{
+  const name=team.team?.displayName||team.team?.name||team.displayName||'Team';
+  const stats=asArray(team.statistics).slice(0,10).map(s=>'<li><span>'+esc(s.label||s.name||s.abbreviation||'Stat')+'</span><strong>'+esc(s.displayValue??s.value??'—')+'</strong></li>').join('');
+  return '<section class="summary-team"><h4>'+esc(name)+'</h4>'+(stats?'<ul>'+stats+'</ul>':'<p class="small">No team stats supplied.</p>')+'</section>';
+ }).join('');
+ const leaderBlocks=leaders.slice(0,6).map(group=>{
+  const label=group.displayName||group.name||'Leaders';
+  const rows=asArray(group.leaders).slice(0,3).map(x=>'<li>'+esc(x.athlete?.displayName||x.athlete?.shortName||'Athlete')+' · '+esc(x.displayValue||x.value||'—')+'</li>').join('');
+  return rows?'<div class="summary-leader"><b>'+esc(label)+'</b><ul>'+rows+'</ul></div>':'';
+ }).join('');
+ const pieces=[];
+ if(description)pieces.push('<p class="summary-description">'+esc(description)+'</p>');
+ if(venue||attendance)pieces.push('<p class="small">'+(venue?'Venue: '+esc(venue):'')+(attendance?' · Attendance: '+esc(attendance):'')+'</p>');
+ if(records.length)pieces.push('<div class="summary-records"><b>Season records returned</b><p>'+records.map(x=>esc(x.name)+': '+esc(x.record)).join(' · ')+'</p></div>');
+ if(seasonSeriesText)pieces.push('<div class="summary-records"><b>Season series / head-to-head</b><p>'+esc(seasonSeriesText)+'</p></div>');
+ if(teamBlocks)pieces.push('<div class="summary-stats-grid">'+teamBlocks+'</div>');
+ if(leaderBlocks)pieces.push('<div class="summary-leaders"><b>Player / team leaders returned</b>'+leaderBlocks+'</div>');
+ if(!pieces.length)pieces.push('<p class="small">The provider returned a match summary, but did not include team statistics or historical records for this event.</p>');
+ return pieces.join('');
+}
+async function loadEventSummary(details){
+ if(details.dataset.loaded==='yes'||details.dataset.loading==='yes')return;
+ const body=details.querySelector('.game-details-body'),path=details.dataset.summaryPath,id=details.dataset.eventId;
+ if(!path||!id)return;
+ details.dataset.loading='yes';body.innerHTML='<p class="small">Loading provider match details…</p>';
+ try{
+  const url='https://site.api.espn.com/apis/site/v2/sports/'+encodeURIComponent(path).replace(/%2F/gi,'/')+'/summary?event='+encodeURIComponent(id);
+  const response=await fetch(url,{headers:{Accept:'application/json'},cache:'no-store'});
+  if(!response.ok)throw new Error('Summary request returned HTTP '+response.status);
+  const payload=await response.json();body.innerHTML=summaryDetails(payload);details.dataset.loaded='yes';
+ }catch(error){
+  body.innerHTML='<p class="small">Match statistics are not available from this provider right now. The scoreboard remains usable; try again later or open the official league link.</p>';
+  details.dataset.failed='yes';
+ }finally{delete details.dataset.loading;}
+}
+async function espnFallback(selectedFeed,selectedMode,selectedDate){
+ const config=SPORTS_FEEDS[selectedFeed],leagues=config?.leagues||[];
+ if(!leagues.length)return {items:[],successCount:0,failedCount:0,leagueCount:0,unsupported:config?.unavailable||'No scoreboard endpoint is connected for this sport yet.'};
+ const dateQuery=selectedMode==='schedule'?'&dates='+encodeURIComponent(selectedDate.replace(/-/g,'')):'';
  const responses=await Promise.allSettled(leagues.map(async league=>{
   const url='https://site.api.espn.com/apis/site/v2/sports/'+league.path+'/scoreboard?limit=100'+dateQuery;
   const response=await fetch(url,{headers:{Accept:'application/json'},cache:'no-store'});
   if(!response.ok)throw new Error(league.name+' HTTP '+response.status);
-  const payload=await response.json();
-  return {league:league.name,events:Array.isArray(payload.events)?payload.events:[]};
+  const payload=await response.json();return {league,events:Array.isArray(payload.events)?payload.events:[]};
  }));
- const successful=responses.filter(x=>x.status==='fulfilled').map(x=>x.value);
- const failures=responses.filter(x=>x.status==='rejected').length;
+ const successful=responses.filter(x=>x.status==='fulfilled').map(x=>x.value),failures=responses.filter(x=>x.status==='rejected').length;
  const seen=new Set(),events=[];
  for(const group of successful)for(const event of group.events){
-  const key=event.id||[event.date,event.name,group.league].join('|');
+  const key=event.id||[event.date,event.name,group.league.name].join('|');
   if(seen.has(key))continue;seen.add(key);events.push(normalizeEspnEvent(event,group.league));
  }
  events.sort((a,b)=>String(a.fixture.date).localeCompare(String(b.fixture.date)));
  return {items:events,successCount:successful.length,failedCount:failures,leagueCount:leagues.length};
 }
+function syncFeedControls(){
+ if(feedSelect)feedSelect.value=feed;
+ document.querySelectorAll('[data-feed]').forEach(button=>button.classList.toggle('active',button.dataset.feed===feed));
+}
 async function load(){
- const seq=++requestId,selectedMode=mode.value,selectedFeed=feed;
- const params=new URLSearchParams({feed,mode:selectedMode});
- if(selectedMode==='schedule')params.set('date',date.value);
- const feedName=feed==='soccer'?'soccer':'American football';
- message.textContent='Trying secure API-Sports '+feedName+' '+(selectedMode==='live'?'live scores':'schedule')+'…';
- list.innerHTML='<div class="empty">Contacting the primary sports feed…</div>';
+ const seq=++requestId,selectedMode=mode.value,selectedDate=date.value,selectedFeed=feed,config=SPORTS_FEEDS[feed];
+ message.textContent='Loading '+(config?.label||'selected sport')+' '+(selectedMode==='live'?'live scores':'schedule')+'…';
+ list.innerHTML='<div class="empty">Checking the selected scoreboard feed…</div>';
  const refresh=document.getElementById('refresh');refresh.disabled=true;
  let primaryError='',primaryCount=null;
+ if(selectedFeed==='soccer'||selectedFeed==='football'){
+  try{
+   const endpoint=selectedFeed==='football'?'sports-nfl-scores':'sports-live-scores';
+   const params=new URLSearchParams({feed:selectedFeed,mode:selectedMode});if(selectedMode==='schedule')params.set('date',selectedDate);
+   const response=await fetch(API_BASE+'/'+endpoint+'?'+params.toString(),{headers:{Accept:'application/json',apikey:SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+SUPABASE_ANON_JWT},cache:'no-store'});
+   const body=await response.json().catch(()=>({}));
+   if(!response.ok||body.ok===false)throw new Error(body.message||body.error||('Request failed ('+response.status+')'));
+   const raw=Array.isArray(body)?body:(body.response||body.games||body.data||body.fixtures||[]);
+   primaryCount=raw.length;
+   if(raw.length){if(seq!==requestId)return;render(raw.map(normalizePrimaryGame));message.textContent='Primary feed · API-Sports · '+raw.length+' matchup(s) · '+new Date().toLocaleTimeString();return;}
+   primaryError='Primary API-Sports feed returned 0 fixtures.';
+  }catch(error){primaryError=error.message||'Primary provider request failed.';}
+ }else{
+  primaryError='No API-Sports primary route is configured for this sport; using public scoreboard fallback.';
+ }
  try{
-  const endpoint=feed==='football'?'sports-nfl-scores':'sports-live-scores';
-  const response=await fetch(API_BASE+'/'+endpoint+'?'+params.toString(),{headers:{Accept:'application/json',apikey:SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+SUPABASE_ANON_JWT},cache:'no-store'});
-  const body=await response.json().catch(()=>({}));
-  if(!response.ok||body.ok===false)throw new Error(body.message||body.error||('Request failed ('+response.status+')'));
-  const items=Array.isArray(body)?body:(body.response||body.games||body.data||body.fixtures||[]);
-  primaryCount=items.length;
-  if(items.length){if(seq!==requestId)return;render(items);message.textContent='Primary feed · API-Sports · '+items.length+' game(s) · '+new Date().toLocaleTimeString();return;}
-  primaryError='Primary provider returned 0 fixtures for this selection.';
- }catch(error){primaryError=error.message||'Primary provider request failed.';}
- try{
-  message.textContent='Primary feed unavailable or empty. Checking mixed ESPN scoreboard fallback…';
-  const fallback=await espnFallback();
+  message.textContent=(selectedFeed==='soccer'||selectedFeed==='football'?'Primary feed empty or unavailable. ':'')+'Checking '+(config?.label||'selected')+' scoreboard feeds…';
+  const fallback=await espnFallback(selectedFeed,selectedMode,selectedDate);
   if(seq!==requestId)return;
   if(fallback.items.length){
    render(fallback.items);
-   message.textContent='Mixed fallback · ESPN public scoreboard · '+fallback.items.length+' matchup(s) across '+fallback.successCount+' of '+fallback.leagueCount+' feed(s) · '+new Date().toLocaleTimeString()+(primaryCount===null?' · Primary feed: '+primaryError:' · Primary feed returned 0');
+   message.textContent='ESPN public scoreboard · '+fallback.items.length+' matchup(s) across '+fallback.successCount+' of '+fallback.leagueCount+' league feed(s) · '+new Date().toLocaleTimeString()+(primaryCount===null?'':' · API-Sports returned '+primaryCount);
+  }else if(fallback.unsupported){
+   list.innerHTML='<div class="empty">'+esc(fallback.unsupported)+' Use the official sport links below while a dependable scoreboard source is added.</div>';
+   message.textContent=(config?.label||'Sport')+' · scoreboard feed not connected · no synthetic fixtures shown.';
   }else{
-   list.innerHTML='<div class="empty">'+(fallback.successCount?'No fixtures were listed by the selected providers for this date or live window.':'No scoreboard provider responded. Use the official score links below while the feeds recover.')+'</div>';
-   message.textContent=(fallback.successCount?'No games returned by fallback':'Fallback feeds unavailable')+' · Primary: '+primaryError+' · ESPN fallback errors: '+fallback.failedCount+'/'+fallback.leagueCount+'.';
+   list.innerHTML='<div class="empty">'+(fallback.successCount?'No fixtures were published for this date or live window.':'No scoreboard provider responded. Official league links remain available below.')+'</div>';
+   message.textContent=(fallback.successCount?'No games returned by the selected league feeds':'Scoreboard fallback unavailable')+' · '+fallback.failedCount+'/'+fallback.leagueCount+' feeds did not respond'+(primaryError?' · '+primaryError:'')+'.';
   }
  }catch(error){
   if(seq!==requestId)return;
-  list.innerHTML='<div class="empty">The primary and fallback score feeds could not be loaded right now. The official scoreboard links below remain available.</div>';
-  message.textContent='Sports feed unavailable · Primary: '+primaryError+' · Fallback: '+(error.message||'request failed');
+  list.innerHTML='<div class="empty">The selected score feeds could not be loaded. The official sport and league links below remain available.</div>';
+  message.textContent='Scoreboard provider unavailable · '+(error.message||'request failed');
  }finally{if(seq===requestId)refresh.disabled=false;}
 }
-document.querySelectorAll('[data-feed]').forEach(button=>button.addEventListener('click',()=>{feed=button.dataset.feed;document.querySelectorAll('[data-feed]').forEach(item=>item.classList.toggle('active',item===button));load();}));
-document.querySelectorAll('[data-jump-feed]').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();feed=link.dataset.jumpFeed;document.querySelectorAll('[data-feed]').forEach(item=>item.classList.toggle('active',item.dataset.feed===feed));document.getElementById('scores').scrollIntoView({behavior:'smooth',block:'start'});load();}));
+document.querySelectorAll('[data-feed]').forEach(button=>button.addEventListener('click',()=>{feed=button.dataset.feed;syncFeedControls();load();}));
+if(feedSelect)feedSelect.addEventListener('change',()=>{feed=feedSelect.value;syncFeedControls();load();});
+document.querySelectorAll('[data-jump-feed]').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();feed=link.dataset.jumpFeed;syncFeedControls();document.getElementById('scores').scrollIntoView({behavior:'smooth',block:'start'});load();}));
+document.addEventListener('toggle',event=>{if(event.target instanceof HTMLDetailsElement&&event.target.matches('details[data-event-summary]')&&event.target.open)loadEventSummary(event.target);},true);
 document.getElementById('refresh').addEventListener('click',load);
 mode.addEventListener('change',()=>{date.style.display=mode.value==='schedule'?'block':'none';load();});
 date.addEventListener('change',()=>{if(mode.value==='schedule')load();});
 date.style.display='none';
+syncFeedControls();
 if(new URLSearchParams(location.search).get('embed')!=='market-lab')load();
 })();
 </script>

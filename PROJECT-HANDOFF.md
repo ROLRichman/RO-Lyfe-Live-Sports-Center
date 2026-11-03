@@ -1,11 +1,29 @@
+## November 2, 2026 — All-Sports scoreboard, stats, live state and scanner navigation (PR #2)
+
+- Added an All Sports scoreboard selector for the full 15-category card list: Soccer, Basketball, American Football, Baseball, Hockey, Tennis, Golf, Cricket, Formula 1, MMA, Rugby, Volleyball, Handball, Australian Football and More Leagues. Each category card now has its own Open Scores shortcut. Existing soccer/football quick buttons and official-resource links remain.
+- Soccer and American Football retain the secured Supabase/API-Sports primary paths; their public ESPN fallback remains. The other configured competitions try the public ESPN site scoreboard. These ESPN JSON endpoints are undocumented and can change; some leagues/sports may return no fixtures or reject browser requests.
+- Cricket currently tries the public ESPN numeric route `cricket/8048`, but endpoint references are not consistent. It is a best-effort attempt, not a guaranteed cricket feed. Handball remains official-link-only until a dependable scoreboard route is verified. The app reports unavailable feeds rather than inventing a score.
+- Score cards include event date/status, teams, scores, venue, season record and match description when returned. Opening Stats & Match History lazily requests the provider summary and shows only returned team statistics, leaders, records or season-series/head-to-head detail. It never inserts sample or estimated stats.
+- In-progress matches get a subtle pulsing state indicator; the animation is disabled under `prefers-reduced-motion`.
+- The Full RTIC Indicator Lab expander is now strongly highlighted, with larger visible arrow/open action, clearer no-scan guidance, WAITING state hierarchy, and distinct styling for MACD, Stochastic, advanced oscillator settings and provider status.
+- A Scanner Desk dropdown connects to the existing Tactical RTIC scanner, Live Desk Watchlist Scanner, Sector Scanner & Chart Lab, Market Terminal and Calculator Pro module-status page. Scanner engines remain in their original repositories and are not duplicated.
+- Updated Playwright test coverage: **7 browser tests passed** on the latest Sports Center commit (run #41553214157). The tests use mocked provider payloads; they verify UI and mapping logic, not current live ESPN availability.
+
+**Current PR:** https://github.com/ROLRichman/RO-Lyfe-Live-Sports-Center/pull/2  
+**Current branch:** `feature/all-sports-scoreboard-stats-scanner-menu`  
+**Status:** Open, mergeable, tests green. Not merged or deployed.  
+**Prior release:** PR #1 remains merged/deployed; this PR #2 is a separate additive follow-up.
+
+---
+
 # RO’Lyfe Live Sports Center™ — Project Handoff
 
 **Repository:** [ROLRichman/RO-Lyfe-Live-Sports-Center](https://github.com/ROLRichman/RO-Lyfe-Live-Sports-Center)  
 **Live site:** https://rolrichman.github.io/RO-Lyfe-Live-Sports-Center/  
 **Updated:** 2026-11-02  
 **Default branch:** `main`  
-**Active branch:** `feature/sports-mixed-feed-embed-fix`  
-**Status:** Changes are on an unmerged feature branch. Do not describe them as live until merged and GitHub Pages succeeds.
+**Active branch:** `feature/all-sports-scoreboard-stats-scanner-menu`  
+**Status:** Earlier PR #1 is merged and GitHub Pages deployment succeeded. Current all-sports expansion is PR #2 on an unmerged feature branch and is not live until approved, merged and deployed.
 
 ---
 
