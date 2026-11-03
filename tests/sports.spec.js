@@ -169,9 +169,14 @@ test('all sport categories offer scoreboard selection and NBA opens real-feed st
   await expect(details).toContainText('Rebounds');
 });
 
-test('non-connected sports show a clear provider status instead of fake fixtures', async ({ page }) => {
+test('Cricket route is attempted and unsupported Handball shows a clear status instead of fake fixtures', async ({ page }) => {
   mockSportsProviders(page);
   await page.goto('/');
+  const cricketRequest = page.waitForRequest(request => request.url().includes('/cricket/8048/scoreboard'));
+  await page.locator('#sportFeedSelect').selectOption('cricket');
+  await cricketRequest;
+  await expect(page.locator('#scores-list .game')).toHaveCount(0);
+  await expect(page.locator('#message')).toContainText('No games returned');
   await page.locator('#sportFeedSelect').selectOption('handball');
   await expect(page.locator('#message')).toContainText('scoreboard feed not connected');
   await expect(page.locator('#scores-list')).toContainText('dependable public scoreboard endpoint');
