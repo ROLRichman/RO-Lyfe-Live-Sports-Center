@@ -39,35 +39,39 @@ jobs:
   sports-backend-smoke:
     runs-on: ubuntu-latest
     steps:
-      - name: Check API-Sports status endpoint
+      - name: Check API-Sports account status endpoint
         env:
           SUPABASE_URL: https://nzduinxmsmmdbonefifi.supabase.co
           SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56ZHVpbnhtc21tZGJvbmVmaWZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNDI5NjMsImV4cCI6MjEwODgxODk2M30.N-2jV4a6wU9315lkVCvhDn7tJJ4ryzDHBeItSRztEh8
         run: |
           set -euo pipefail
-          status="$(curl --fail-with-body --silent --show-error "$SUPABASE_URL/functions/v1/sports-api-status" \
+          code="$(curl --silent --show-error --output /tmp/sports-status.json --write-out '%{http_code}' "$SUPABASE_URL/functions/v1/sports-api-status" \
             -H "apikey: $SUPABASE_ANON_KEY" \
             -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
             -H "Accept: application/json")"
-          echo "$status" | jq -c .
-          echo "$status" | jq -e '.ok == true' >/dev/null
-      - name: Check the real API-Football live-fixtures feed
+          echo "API-Sports status-function HTTP: $code"
+          cat /tmp/sports-status.json | jq -c .
+          if [[ "$code" != "200" ]]; then
+            echo "::error::API-Sports status probe failed; inspect the returned upstream status."
+            exit 1
+          fi
+          cat /tmp/sports-status.json | jq -e '.ok == true' >/dev/null
+      - name: Check live API-Football fixtures even when status probe fails
+        if: always()
         env:
           SUPABASE_URL: https://nzduinxmsmmdbonefifi.supabase.co
           SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56ZHVpbnhtc21tZGJvbmVmaWZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMyNDI5NjMsImV4cCI6MjEwODgxODk2M30.N-2jV4a6wU9315lkVCvhDn7tJJ4ryzDHBeItSRztEh8
         run: |
           set -euo pipefail
-          response="$(curl --silent --show-error --write-out '\nHTTP_CODE:%{http_code}' "$SUPABASE_URL/functions/v1/sports-live-scores" \
+          code="$(curl --silent --show-error --output /tmp/sports-live.json --write-out '%{http_code}' "$SUPABASE_URL/functions/v1/sports-live-scores" \
             -H "apikey: $SUPABASE_ANON_KEY" \
             -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
-            -H "Accept: application/json" || true)"
-          http_code="${response##*$'\n'HTTP_CODE:}"
-          body="${response%$'\n'HTTP_CODE:*}"
-          echo "Sports live-fixtures HTTP status: $http_code"
-          echo "$body" | jq -c .
-          if [[ "$http_code" != "200" ]]; then
-            echo "::error::API-Football live-fixtures request failed through the Sports Supabase Edge Function."
+            -H "Accept: application/json")"
+          echo "API-Football fixtures-function HTTP: $code"
+          cat /tmp/sports-live.json | jq -c .
+          if [[ "$code" != "200" ]]; then
+            echo "::error::API-Football fixtures request failed; inspect its provider error details."
             exit 1
           fi
-          echo "$body" | jq -e '.ok == true and (.results | type == "number")' >/dev/null
+          cat /tmp/sports-live.json | jq -e '.ok == true and (.results | type == "number")' >/dev/null
           echo "API-Football live-fixtures endpoint responded successfully."
