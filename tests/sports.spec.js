@@ -212,13 +212,23 @@ test('RTIC Indicator Lab expander is visibly highlighted and its advanced panels
   await expect(page.locator('#rticProviderDetails > summary')).toContainText('Provider configuration status');
 });
 
-test('shared five-language translator is available on the embedded market lab', async ({ page }) => {
+test('global page-language selector translates the whole embedded market lab', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('**/functions/v1/rol-page-translate', async route => {
+    const payload = route.request().postDataJSON();
+    const translations = payload.segments.map(value => 'ES · ' + value);
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ language: payload.language, translations, count: translations.length })
+    });
+  });
   await page.goto('/?embed=market-lab');
-  const translator = page.locator('#rol-network-translator');
-  await expect(translator).toBeVisible();
-  await translator.locator('summary').click();
-  await expect(translator.locator('#rolTranslateNetworkLanguage option')).toHaveCount(5);
-  await translator.locator('#rolTranslateNetworkLanguage').selectOption('Haitian Creole');
-  await expect(translator.locator('summary')).toContainText('Kreyòl Ayisyen');
+  const language = page.locator('#rolPageLanguageSelect');
+  await expect(language).toBeVisible();
+  await expect(language.locator('option')).toHaveCount(5);
+  await language.selectOption('Spanish');
+  await expect.poll(async () => (await page.locator('h1').first().textContent()) || '').toContain('ES ·');
+  await expect(language).toHaveValue('Spanish');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('rolyfe-translate-language'))).toBe('Spanish');
 });
