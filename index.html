@@ -430,11 +430,12 @@ function summaryDetails(summary){
  }).join('');
  const leaderBlocks=leaders.map(group=>{
   const label=group.displayName||group.name||'Leaders';
-  const rows=asArray(group.leaders).slice(0,5).map(x=>{
-   const athlete=x.athlete?.displayName||x.athlete?.fullName||x.athlete?.shortName||x.athlete?.name||x.name||'Leader';
-   const value=x.displayValue||x.value||x.statistics?.[0]?.displayValue||'—';
-   return '<li>'+esc(athlete)+' · '+esc(value)+'</li>';
-  }).join('');
+  const rows=asArray(group.leaders).slice(0,8).map(x=>{
+   const athlete=x.athlete?.displayName||x.athlete?.fullName||x.athlete?.shortName||x.athlete?.name||x.name||x.team?.displayName||'';
+   const value=x.displayValue||x.value||x.statistics?.[0]?.displayValue||'';
+   if(!athlete&&!value)return '';
+   return '<li>'+esc(athlete||label)+' · '+esc(value||'Stat returned')+'</li>';
+  }).filter(Boolean).join('');
   return rows?'<div class="summary-leader"><b>'+esc(label)+'</b><ul>'+rows+'</ul></div>':'';
  }).join('');
  const pieces=[];
