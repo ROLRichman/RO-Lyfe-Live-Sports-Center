@@ -49,8 +49,9 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "rol-access-exit";
-    button.textContent = "ACCESS ACTIVE · SIGN OUT";
+    button.textContent = "SIGN OUT";
     button.setAttribute("aria-label", "Sign out of remembered preview access");
+    button.title = "Preview access is remembered on this device";
     button.addEventListener("click", () => {
       try { localStorage.removeItem(ACCESS_KEY); } catch (_) {}
       window.location.reload();
