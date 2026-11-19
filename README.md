@@ -79,3 +79,11 @@ The **Sports Center browser tests** mock primary Supabase errors and fallback sc
 - Both sites share the browser key `rolyfe.shared.preview.access.v1` because they are project paths on the same `rolrichman.github.io` origin. Entering at one front door lets visitors move to the other without another preview prompt.
 - This is a convenience gateway, not authentication or a security barrier. It does not protect APIs, private data, or page source. Secure account sign-in / single sign-on remains a later phase.
 - Embedded Trading Classroom and Market Lab views bypass the gateway to preserve their existing embed behavior.
+
+
+## Shared RO’Lyfe front-door preview access
+
+- This site's public front door uses the common remembered-device gateway key `rolyfe.shared.preview.access.v1`.
+- Entering once on any configured RO’Lyfe media front door on `rolrichman.github.io` lets visitors move among Entertainment, Live Sports, Gaming, Vision Hub and JUST LISTENING without another preview prompt on the same browser.
+- This is a convenience preview, not real authentication or a security barrier. It does not protect private content, APIs, or page source. Secure account sign-in / single sign-on is a later phase.
+- The welcome screen announces a planned first-three-months-free launch offer; confirm final commercial terms before accepting payments or publishing final pricing.
