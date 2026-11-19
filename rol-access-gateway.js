@@ -6,7 +6,7 @@
   "use strict";
   const ACCESS_KEY = "rolyfe.shared.preview.access.v1";
   const EMBED_MODE = new URLSearchParams(window.location.search).get("embed");
-  if (EMBED_MODE === "classroom" || EMBED_MODE === "market-lab") return;
+  if (EMBED_MODE) return;
 
   const hasAccess = () => {
     try { return localStorage.getItem(ACCESS_KEY) === "entered"; }
