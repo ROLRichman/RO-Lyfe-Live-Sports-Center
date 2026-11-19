@@ -71,3 +71,11 @@ The **Sports Center browser tests** mock primary Supabase errors and fallback sc
 - Soccer remains the first-priority sport, with shortcuts to FIFA, UEFA and the Premier League.
 - Tennis includes ATP Tour and WTA links; golf and cricket include PGA TOUR and ICC resources.
 - Official links are destinations, not a guarantee of live-score coverage, stream availability, or regional access.
+
+
+## Shared front-door preview access
+
+- The root Sports Center page uses the same remembered-device preview gateway as RO'Lyfe Entertainment Network.
+- Both sites share the browser key `rolyfe.shared.preview.access.v1` because they are project paths on the same `rolrichman.github.io` origin. Entering at one front door lets visitors move to the other without another preview prompt.
+- This is a convenience gateway, not authentication or a security barrier. It does not protect APIs, private data, or page source. Secure account sign-in / single sign-on remains a later phase.
+- Embedded Trading Classroom and Market Lab views bypass the gateway to preserve their existing embed behavior.
