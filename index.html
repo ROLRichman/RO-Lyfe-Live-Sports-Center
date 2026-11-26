@@ -178,6 +178,26 @@ html.market-lab-embed .market-table-wrap{overflow-x:auto}
 @media(max-width:640px){html.market-lab-embed main#top{padding:0 6px}html.market-lab-embed .market-lab-wrap{padding:8px}html.market-lab-embed .market-controls{grid-template-columns:1fr}}
 </style>
   <link rel="stylesheet" href="rol-engine-identity.css?v=20261113-1">
+<style id="connect-embed-style">
+html.connect-embed,html.connect-embed body{max-width:100%;overflow-x:hidden;scroll-behavior:auto}
+html.connect-embed .topbar{position:static;backdrop-filter:none}
+html.connect-embed .topbar .nav{min-height:0;padding:9px 0;display:block}
+html.connect-embed .topbar .brand{display:block;font-size:.92rem;letter-spacing:0;line-height:1.25}
+html.connect-embed .topbar .brand small{display:none}
+html.connect-embed .topbar .navlinks{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.8rem;margin-top:8px}
+html.connect-embed .topbar .navlinks a{padding:3px 0}
+html.connect-embed .topbar .rol-scanner-directory,html.connect-embed #rol-global-tools,html.connect-embed .rol-workspace-toggle,html.connect-embed .rol-workspace-panel,html.connect-embed .rol-ai-fab,html.connect-embed .rol-ai-panel,html.connect-embed #rolCentralJamal,html.connect-embed #rolRadioRoot,html.connect-embed #rolRadioLauncher{display:none!important}
+html.connect-embed .hero{padding:12px 0}
+html.connect-embed .hero h1{font-size:clamp(1.6rem,5vw,2.5rem);margin:6px 0}
+html.connect-embed .hero p{font-size:.9rem;margin:8px 0}
+html.connect-embed .wrap{width:calc(100% - 16px);max-width:1180px}
+html.connect-embed section{padding:12px 0}
+html.connect-embed .scores,html.connect-embed .sportsgrid,html.connect-embed .resourcegrid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+html.connect-embed .controls select,html.connect-embed .controls input{min-width:0;max-width:100%}
+html.connect-embed .sectionhead>*{min-width:0;max-width:100%}
+html.connect-embed .market-table-wrap{overflow-x:auto}
+html.connect-embed [id]{scroll-margin-top:8px}
+</style><script>if(new URLSearchParams(location.search).get('embed')==='connect'){document.documentElement.classList.add('connect-embed');}</script>
 </head>
 <body>
 <script>
