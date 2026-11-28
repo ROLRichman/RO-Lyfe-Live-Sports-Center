@@ -198,7 +198,7 @@ html.connect-embed .sectionhead>*{min-width:0;max-width:100%}
 html.connect-embed .market-table-wrap{overflow-x:auto}
 html.connect-embed [id]{scroll-margin-top:8px}
 </style><script>if(new URLSearchParams(location.search).get('embed')==='connect'){document.documentElement.classList.add('connect-embed');}</script>
-</head>
+<style id="rol-player-stat-refresh">#scores-list>.game:has(>.game-details[open]),#scores-list>.score-overflow:has(.game-details[open]),.score-overflow-list>.game:has(>.game-details[open]){grid-column:1/-1}.game-details-body{font-size:clamp(.95rem,1.5vw,1.08rem);line-height:1.5}.game-details-body .summary-records{padding:clamp(8px,1.5vw,14px)}.game-details-body .summary-leaders{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));align-items:start;gap:12px}.game-details-body .summary-records>b{display:block;font-size:1rem;color:#f7d58a}.player-stat-group>summary{cursor:pointer;text-transform:capitalize;font-size:1.05rem;font-weight:800;color:#f7d58a;padding:4px 0 10px}.player-stat-group>summary span{font-size:.8rem;color:#d1dce8;font-weight:500}.summary-leader .player-stat-card{list-style:none;padding:10px;margin:7px 0;background:#102337;border:1px solid #35516b;border-radius:10px;color:#f3f7ff}.player-stat-name{font-weight:800;font-size:1.03rem;line-height:1.4;margin-bottom:8px;color:#fff}.player-stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,70px),1fr));gap:5px}.player-stat-chip{min-width:0;background:#071522;border-radius:7px;padding:6px;text-align:center}.player-stat-chip span{display:block;color:#a9c8e0;font-size:.72rem;overflow-wrap:anywhere}.player-stat-chip strong{display:block;color:#fff;font-size:1rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.player-bio{margin-top:9px;border-top:1px solid #35516b;padding-top:7px}.player-bio>summary{font-size:.88rem;font-weight:700;color:#80e0ff;cursor:pointer;min-height:34px;display:list-item}.player-profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:6px;margin:8px 0}.player-profile-grid div{padding:6px;border:1px solid #35516b;border-radius:7px}.player-profile-grid dt{font-size:.75rem;color:#b6cfe3}.player-profile-grid dd{margin:0;font-weight:700;color:white;overflow-wrap:anywhere}.player-research{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,135px),1fr));gap:6px;margin-top:8px}.player-research a,.player-bio-data>a{display:block;font-size:.83rem;color:#90e7ff;padding:7px;border:1px solid #35516b;border-radius:7px;text-decoration:none;overflow-wrap:anywhere}.player-research-note,.player-bio-data p{font-size:.8rem!important;line-height:1.5;color:#c4d4e3!important}.game-details-body .summary-leader li{overflow-wrap:anywhere}@media(max-width:700px){.game-details-body .summary-leaders{grid-template-columns:1fr}.player-stat-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,64px),1fr))}}</style></head>
 <body>
 <script>
 (function(){const mode=new URLSearchParams(location.search).get('embed');if(mode==='classroom')document.documentElement.classList.add('classroom-embed');if(mode==='market-lab'){document.documentElement.classList.add('market-lab-embed');document.addEventListener('DOMContentLoaded',()=>{const panel=document.getElementById('market-lab-panel');if(panel)panel.open=true;});}})();
@@ -421,7 +421,7 @@ function render(items){
  const overflow=visible.slice(20).map(x=>x+'</article>').join('');
  list.innerHTML=firstTwenty+(overflow?'<details class="score-overflow"><summary>Show '+(visible.length-20)+' more matchups</summary><div class="score-overflow-list">'+overflow+'</div></details>':'');
 }
-function summaryDetails(summary){
+function summaryDetails(summary,path=''){
  const info=summary.gameInfo||{},header=(summary.header?.competitions||[])[0]||{},teams=asArray(summary.boxscore?.teams),leaders=asArray(summary.leaders);
  const venue=info.venue?.fullName||info.venue?.address?.city||header.venue?.fullName||'';
  const attendance=info.attendance?Number(info.attendance).toLocaleString():'';
@@ -441,13 +441,15 @@ function summaryDetails(summary){
   const sections=stats.map(group=>{
    const labels=asArray(group.labels||group.names);
    const athletes=asArray(group.athletes);
-   const rows=athletes.slice(0,8).map(player=>{
-    const name=player.athlete?.displayName||player.athlete?.fullName||player.athlete?.shortName||'Player';
-    const values=asArray(player.stats);
-    const detail=values.map((v,i)=>(labels[i]?labels[i]+': ':'')+v).join(' · ');
-    return '<li>'+esc(name)+' · '+esc(detail||player.displayValue||'Stats returned')+'</li>';
+   const rows=athletes.map(player=>{
+    const a=player.athlete||{},name=a.displayName||a.fullName||a.shortName||'Player';
+    const values=asArray(player.stats),id=String(a.id||''),safePath=/^[a-z-]+\/[a-z0-9.-]+$/i.test(path)?path:'';
+    const chips=values.map((v,i)=>'<div class="player-stat-chip"><span>'+esc(labels[i]||'Stat '+(i+1))+'</span><strong>'+esc(v)+'</strong></div>').join('');
+    const query=(topic)=>'https://www.google.com/search?q='+encodeURIComponent(name+' '+teamName+' '+topic);
+    const links=[['Career / bio','career biography years played'],['Team trades & contracts','team trades contract history'],['Business & investments','publicly reported business investments endorsements'],['Agent / representation','publicly reported sports agent financial advisor']].map(([title,topic])=>'<a href="'+esc(query(topic))+'" target="_blank" rel="noopener noreferrer">'+esc(title)+' ↗</a>').join('');
+    return '<li class="player-stat-card"><div class="player-stat-name">'+esc(name)+'</div><div class="player-stat-grid">'+(chips||'<span>'+esc(player.displayValue||'No individual values supplied')+'</span>')+'</div><details class="player-bio" data-player-id="'+esc(/^\d+$/.test(id)?id:'')+'" data-player-path="'+esc(safePath)+'"><summary>About player · career &amp; business</summary><div class="player-bio-data"><p>Open to load available career profile.</p></div><div class="player-research">'+links+'</div><p class="player-research-note">Research links only. Holdings, financial advisors and investments are not verified by the sports feed. Use reliable public reporting; private information is not provided.</p></details></li>';
    }).join('');
-   return rows?'<div class="summary-leader"><b>'+esc(group.name||group.displayName||'Player stats')+'</b><ul>'+rows+'</ul></div>':'';
+   return rows?'<details class="summary-leader player-stat-group" open><summary>'+esc((group.displayName||group.name||'Player stats').replace(/[_-]/g,' '))+' <span>'+athletes.length+' players</span></summary><ul>'+rows+'</ul></details>':'';
   }).join('');
   return sections?'<div class="summary-records"><b>'+esc(teamName)+' · Player box score</b><div class="summary-leaders">'+sections+'</div></div>':'';
  }).join('');
@@ -472,6 +474,21 @@ function summaryDetails(summary){
  if(!pieces.length)pieces.push('<p class="small">The provider returned a match summary, but did not include team statistics or historical records for this event.</p>');
  return pieces.join('');
 }
+const playerProfileCache=new Map();
+async function loadPlayerProfile(details){
+ if(details.dataset.loaded==='yes'||details.dataset.loading==='yes')return;
+ const body=details.querySelector('.player-bio-data'),path=details.dataset.playerPath,id=details.dataset.playerId;if(!body)return;
+ if(!/^[a-z-]+\/[a-z0-9.-]+$/i.test(path||'')||!/^\d+$/.test(id||'')){body.textContent='No athlete profile identifier supplied. Use the career research link below.';return}
+ details.dataset.loading='yes';body.textContent='Loading athlete profile…';
+ try{const key=path+'/'+id;let payload=playerProfileCache.get(key);if(!payload){const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),10000);try{const response=await fetch('https://site.web.api.espn.com/apis/common/v3/sports/'+path+'/athletes/'+id,{signal:ctl.signal,headers:{Accept:'application/json'}});if(!response.ok)throw Error('HTTP '+response.status);payload=await response.json();if(playerProfileCache.size>=150)playerProfileCache.delete(playerProfileCache.keys().next().value);playerProfileCache.set(key,payload)}finally{clearTimeout(timer)}}
+ const a=payload.athlete||payload,experience=a.experience?.years??a.experience?.displayValue, draft=a.draft, college=a.college?.name||a.college?.displayName;
+ const fields=[['Name',a.displayName||a.fullName],['Position',a.position?.displayName||a.position?.name||a.position?.abbreviation],['Current team',a.team?.displayName||a.team?.name],['Age',a.age],['Experience (provider reported)',experience],['Debut year',a.debutYear],['College',college],['Draft year',draft?.year],['Draft round',draft?.round],['Draft pick',draft?.selection??draft?.pick],['Height',a.displayHeight],['Weight',a.displayWeight],['Status',a.status?.name||a.status?.type]];
+ const valid=fields.filter(([k,v])=>typeof v==='number'||(typeof v==='string'&&v.trim()));
+ const career=path==='football/nfl'?'https://www.espn.com/nfl/player/stats/_/id/'+id:path==='basketball/nba'?'https://www.espn.com/nba/player/stats/_/id/'+id:path==='basketball/wnba'?'https://www.espn.com/wnba/player/stats/_/id/'+id:path==='baseball/mlb'?'https://www.espn.com/mlb/player/stats/_/id/'+id:path==='hockey/nhl'?'https://www.espn.com/nhl/player/stats/_/id/'+id:'';
+ body.innerHTML=(valid.length?'<dl class="player-profile-grid">'+valid.map(([k,v])=>'<div><dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+'</dl><p class="player-research-note">Source: ESPN athlete profile. Experience is reported by the provider, not calculated.</p>':'<p>No career fields supplied by provider.</p>')+(career?'<a href="'+esc(career)+'" target="_blank" rel="noopener noreferrer">Career statistics by season ↗</a>':'');details.dataset.loaded='yes';
+ }catch(e){body.textContent='Player profile unavailable from the provider. Use the career and public research links below. Close and reopen to retry.'}finally{delete details.dataset.loading}
+}
+document.addEventListener('toggle',event=>{if(event.target instanceof HTMLDetailsElement&&event.target.matches('details.player-bio')&&event.target.open)loadPlayerProfile(event.target)},true);
 async function loadEventSummary(details){
  if(details.dataset.loaded==='yes'||details.dataset.loading==='yes')return;
  const body=details.querySelector('.game-details-body'),path=details.dataset.summaryPath,id=details.dataset.eventId;
@@ -481,7 +498,7 @@ async function loadEventSummary(details){
   const url='https://site.api.espn.com/apis/site/v2/sports/'+encodeURIComponent(path).replace(/%2F/gi,'/')+'/summary?event='+encodeURIComponent(id);
   const response=await fetch(url,{headers:{Accept:'application/json'},cache:'no-store'});
   if(!response.ok)throw new Error('Summary request returned HTTP '+response.status);
-  const payload=await response.json();body.innerHTML=summaryDetails(payload);details.dataset.loaded='yes';
+  const payload=await response.json();body.innerHTML=summaryDetails(payload,path);details.dataset.loaded='yes';
  }catch(error){
   body.innerHTML='<p class="small">Match statistics are not available from this provider right now. The scoreboard remains usable; try again later or open the official league link.</p>';
   details.dataset.failed='yes';
